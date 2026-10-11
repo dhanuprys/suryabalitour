@@ -1,7 +1,12 @@
 /**
  * Centralized Contact & Booking Phone Configuration
- * Single source of truth for phone numbers and direct WhatsApp links.
+ * Single source of truth for site domain, URL, phone numbers, and direct WhatsApp links.
  */
+
+// Canonical Site Domain & URL
+export const SITE_DOMAIN = 'suryabalitour.id';
+export const SITE_URL = `https://${SITE_DOMAIN}`;
+export const SITE_NAME = 'Surya Bali Tour';
 
 // Digits-only for WhatsApp URLs and tel links (no spaces, dashes, or +)
 export const SITE_PHONE_RAW = '6285935080303';

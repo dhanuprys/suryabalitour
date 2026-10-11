@@ -9,7 +9,7 @@
 		HowToBookBlock,
 		FooterBlock
 	} from '#lib/components/blocks';
-	import { generateAgencySchema } from '#lib/data/seo';
+	import { generateAgencySchema, SITE_URL } from '#lib/data/seo';
 
 	const agencySchema = generateAgencySchema();
 </script>
@@ -20,7 +20,7 @@
 		name="description"
 		content="Experience Bali with native Balinese guides. Private 10-hour car charters from $55/day, customized day trips, waterfall adventures, and temple excursions. Pay cash to driver, free cancellation."
 	/>
-	<link rel="canonical" href="https://suryabalitour.com/" />
+	<link rel="canonical" href="{SITE_URL}/" />
 	<meta
 		property="og:title"
 		content="Surya Bali Tour | Authentic Private Tours & Personal Drivers in Bali"
@@ -29,7 +29,7 @@
 		property="og:description"
 		content="Discover the sacred beauty and cultural soul of Bali with dedicated native Balinese drivers. Private car charters, flexible itineraries, and zero upfront deposits."
 	/>
-	<meta property="og:url" content="https://suryabalitour.com/" />
+	<meta property="og:url" content="{SITE_URL}/" />
 	<meta property="og:type" content="website" />
 	<meta
 		property="og:image"

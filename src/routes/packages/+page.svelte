@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import { tourPackages } from '#lib/data';
-	import { generateBreadcrumbSchema } from '#lib/data/seo';
+	import { generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
 	import { trackTourList, trackSearch } from '#lib/analytics';
 
 	const breadcrumbSchema = generateBreadcrumbSchema([
@@ -113,13 +113,13 @@
 		name="description"
 		content="Discover private full-day Bali tour packages from $50–$65/car. Ubud waterfalls, Nusa Penida, Ulun Danu, Uluwatu sunset & volcano treks with dedicated local drivers. Free 24h cancellation."
 	/>
-	<link rel="canonical" href="https://suryabalitour.com/packages" />
+	<link rel="canonical" href="{SITE_URL}/packages" />
 	<meta property="og:title" content="Private Bali Tour Packages & Day Charters | Surya Bali Tour" />
 	<meta
 		property="og:description"
 		content="Explore private full-day Bali tours with dedicated local drivers. Transparent pricing per vehicle, fuel included, zero upfront deposit, pay cash on the day."
 	/>
-	<meta property="og:url" content="https://suryabalitour.com/packages" />
+	<meta property="og:url" content="{SITE_URL}/packages" />
 	<meta property="og:type" content="website" />
 	<meta
 		property="og:image"

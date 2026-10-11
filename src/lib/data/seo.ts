@@ -1,9 +1,6 @@
 import type { TourPackage } from './tours';
-import { SITE_PHONE, SITE_EMAIL } from './contact';
+import { SITE_PHONE, SITE_EMAIL, SITE_URL, SITE_NAME } from './contact';
 export * from './contact';
-
-export const SITE_URL = 'https://suryabalitour.com';
-export const SITE_NAME = 'Surya Bali Tour';
 
 /**
  * Generate Schema.org TravelAgency / LocalBusiness JSON-LD
