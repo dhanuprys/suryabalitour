@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+html,
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+}
