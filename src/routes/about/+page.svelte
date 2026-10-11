@@ -3,7 +3,7 @@
 	import { mediaPartners } from '#lib/data';
 	import { generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
 	import mountBaturSunriseImg from '#lib/assets/images/banners/mount-batur-sunrise.webp';
-	import traditionalTempleGateImg from '#lib/assets/images/banners/traditional-temple-gate.webp';
+	import greetingImg from '#lib/assets/images/banners/greeting.webp';
 
 	const breadcrumbSchema = generateBreadcrumbSchema([
 		{ name: 'Home', url: '/' },
@@ -114,8 +114,8 @@
 			class="relative aspect-4/3 overflow-hidden rounded-2xl shadow-xl sm:aspect-16/10 lg:col-span-7"
 		>
 			<img
-				alt="Traditional Balinese Temple Atmosphere"
-				src={traditionalTempleGateImg}
+				alt="Traditional Balinese Greeting and Hospitality"
+				src={greetingImg}
 				class="h-full w-full object-cover"
 			/>
 			<div
