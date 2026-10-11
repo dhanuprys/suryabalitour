@@ -2,6 +2,8 @@
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import { mediaPartners } from '#lib/data';
 	import { generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
+	import mountBaturSunriseImg from '#lib/assets/images/banners/mount-batur-sunrise.webp';
+	import traditionalTempleGateImg from '#lib/assets/images/banners/traditional-temple-gate.webp';
 
 	const breadcrumbSchema = generateBreadcrumbSchema([
 		{ name: 'Home', url: '/' },
@@ -49,7 +51,7 @@
 		<img
 			alt="About Surya Bali Tour"
 			class="absolute inset-0 h-full w-full object-cover opacity-35"
-			src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop"
+			src={mountBaturSunriseImg}
 		/>
 		<div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black"></div>
 
@@ -113,7 +115,7 @@
 		>
 			<img
 				alt="Traditional Balinese Temple Atmosphere"
-				src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1400&auto=format&fit=crop"
+				src={traditionalTempleGateImg}
 				class="h-full w-full object-cover"
 			/>
 			<div

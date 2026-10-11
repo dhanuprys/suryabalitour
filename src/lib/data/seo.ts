@@ -15,7 +15,7 @@ export function generateAgencySchema() {
 		url: SITE_URL,
 		logo: `${SITE_URL}/favicon.svg`,
 		image:
-			'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop',
+			'https://res.cloudinary.com/spsms1n0/image/upload/v1791717377/thumbnail-suryabalitour.png',
 		description:
 			'Authentic private Bali day tours, personal driver charters, custom itineraries, and airport transfers guided by native Balinese professionals.',
 		telephone: SITE_PHONE,

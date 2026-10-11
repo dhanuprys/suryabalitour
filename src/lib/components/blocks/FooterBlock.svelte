@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BrandLogo from '#lib/assets/images/branding/logo.png';
+	import scenicBaliLandscape from '#lib/assets/images/banners/scenic-bali-landscape.webp';
 	import { footerNavSections, socialLinks } from '#lib/data';
 	import { trackWhatsAppClick, trackEvent } from '#lib/analytics';
 </script>
@@ -13,7 +14,7 @@
 		<img
 			alt="Scenic Bali Landscape"
 			class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-30"
-			src="https://images.unsplash.com/photo-1558005530-a7958896ec60?q=80&w=1600&auto=format&fit=crop"
+			src={scenicBaliLandscape}
 		/>
 		<div
 			class="pointer-events-none absolute inset-0 z-0 bg-linear-to-b from-black/80 via-black/40 to-black"

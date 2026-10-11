@@ -2,6 +2,7 @@
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import { tourPackages } from '#lib/data';
 	import { generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
+	import mountBaturSunriseImg from '#lib/assets/images/banners/mount-batur-sunrise.webp';
 	import { trackTourList, trackSearch } from '#lib/analytics';
 
 	const breadcrumbSchema = generateBreadcrumbSchema([
@@ -150,7 +151,7 @@
 		<img
 			alt="Tour Packages Banner"
 			class="absolute inset-0 h-full w-full object-cover opacity-30"
-			src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop"
+			src={mountBaturSunriseImg}
 		/>
 		<div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black"></div>
 

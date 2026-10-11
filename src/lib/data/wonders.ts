@@ -1,3 +1,6 @@
+import manMadeWondersImg from '../assets/images/wonders/man-made-wonders.webp';
+import natureLifeWondersImg from '../assets/images/wonders/nature-life-wonders.webp';
+
 export interface WonderHighlight {
 	id: string;
 	tag: string;
@@ -17,8 +20,7 @@ export const wonderHighlights: WonderHighlight[] = [
 		description:
 			'Step intothe legacy of human ambition. From timeless monuments to breathtaking landmarks, explore our currated guides',
 		buttonText: 'Explore Wonders',
-		image:
-			'https://images.unsplash.com/photo-1565970237868-df39bfc3f80f?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		image: manMadeWondersImg,
 		textOnLeft: true
 	},
 	{
@@ -28,8 +30,7 @@ export const wonderHighlights: WonderHighlight[] = [
 		description:
 			'Step intothe legacy of human ambition. From timeless monuments to breathtaking landmarks, explore our currated guides',
 		buttonText: 'Explore Wonders',
-		image:
-			'https://images.unsplash.com/photo-1557093793-d149a38a1be8?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		image: natureLifeWondersImg,
 		textOnLeft: false
 	}
 ];

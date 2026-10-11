@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { mediaPartners } from '#lib/data';
 	import { trackEvent } from '#lib/analytics';
+	import scenicBaliLandscape from '#lib/assets/images/banners/scenic-bali-landscape.webp';
 </script>
 
 <section class="relative min-h-screen w-full overflow-hidden bg-black">
 	<img
 		class="absolute inset-0 h-full w-full object-cover opacity-60"
 		alt="Scenic Bali Landscape"
-		src="https://images.unsplash.com/photo-1558005530-a7958896ec60?q=80&w=1600&auto=format&fit=crop"
+		src={scenicBaliLandscape}
 	/>
 	<div class="absolute inset-0 bg-linear-to-b from-black/80 via-transparent to-black"></div>
 

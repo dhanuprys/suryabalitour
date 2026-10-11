@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import { generateFaqSchema, generateBreadcrumbSchema, SITE_URL, WHATSAPP_DIRECT_URL, SITE_EMAIL } from '#lib/data/seo';
+	import traditionalTempleGateImg from '#lib/assets/images/banners/traditional-temple-gate.webp';
 
 	const sections = [
 		{
@@ -117,7 +118,7 @@
 		<img
 			alt="Terms and Policies Banner"
 			class="absolute inset-0 h-full w-full object-cover opacity-30"
-			src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1600&auto=format&fit=crop"
+			src={traditionalTempleGateImg}
 		/>
 		<div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black"></div>
 
