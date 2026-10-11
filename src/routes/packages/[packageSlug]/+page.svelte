@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import type { PageData } from './$types';
-	import { generateTourSchema, generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
+	import { generateTourSchema, generateBreadcrumbSchema, SITE_URL, getWhatsAppUrl } from '#lib/data/seo';
 	import {
 		trackTourView,
 		trackTourInquiry,
@@ -67,10 +67,8 @@
 
 	// Derived WhatsApp inquiry link pre-filled with real booking details (CRO)
 	const whatsappInquiryUrl = $derived.by(() => {
-		const message = encodeURIComponent(
-			`Hi Surya Bali Tour! I would like to book the "${tour.title}" for ${numberOfPeople} people on ${tourDate || 'my requested date'}. Estimated total: $${totalPrice} ${tour.currency}. Please confirm vehicle and driver availability.`
-		);
-		return `https://wa.me/6281234567890?text=${message}`;
+		const message = `Hi Surya Bali Tour! I would like to book the "${tour.title}" for ${numberOfPeople} people on ${tourDate || 'my requested date'}. Estimated total: $${totalPrice} ${tour.currency}. Please confirm vehicle and driver availability.`;
+		return getWhatsAppUrl(message);
 	});
 
 	// Dynamic Schema.org structured data (SEO & AI SEO)
@@ -498,7 +496,7 @@
 										id="phone"
 										type="tel"
 										bind:value={phone}
-										placeholder="+62 812..."
+										placeholder="+62 859..."
 										class="w-full rounded-xl border border-white/20 bg-black/60 px-3 py-2 text-sm text-white placeholder-white/30 focus:border-white focus:outline-none"
 									/>
 								</div>

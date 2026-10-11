@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { headerNavItems } from '#lib/data';
+	import { headerNavItems, SITE_PHONE_DISPLAY, WHATSAPP_DIRECT_URL } from '#lib/data';
 	import BrandLogo from '#lib/assets/images/branding/logo.png';
+	import { trackWhatsAppClick } from '#lib/analytics';
 
 	let mobileMenuOpen = $state(false);
 
@@ -49,7 +50,17 @@
 			<ul class="flex items-center gap-10 text-sm font-light tracking-wider uppercase">
 				{#each headerNavItems as item (item.href)}
 					<li>
-						<a href={item.href} class="text-white/90 transition-colors hover:text-white">
+						<a
+							href={item.href}
+							target={item.href.startsWith('http') ? '_blank' : undefined}
+							rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+							onclick={() => {
+								if (item.href.includes('wa.me')) {
+									trackWhatsAppClick('header_nav');
+								}
+							}}
+							class="text-white/90 transition-colors hover:text-white"
+						>
 							{item.label}
 						</a>
 					</li>
@@ -110,7 +121,14 @@
 						<li>
 							<a
 								href={item.href}
-								onclick={closeMenu}
+								target={item.href.startsWith('http') ? '_blank' : undefined}
+								rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+								onclick={() => {
+									closeMenu();
+									if (item.href.includes('wa.me')) {
+										trackWhatsAppClick('header_mobile_drawer');
+									}
+								}}
 								class="block text-3xl font-semibold tracking-tight text-white transition-colors hover:text-white/70"
 							>
 								{item.label}
@@ -122,9 +140,15 @@
 
 			<div class="space-y-3 border-t border-white/10 pt-6">
 				<p class="text-xs tracking-widest text-white/50 uppercase">Private Tour Assistance</p>
-				<p class="text-sm font-light text-white/80">
-					Direct WhatsApp: <span class="font-medium text-white">+62 812-3456-7890</span>
-				</p>
+				<a
+					href={WHATSAPP_DIRECT_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					onclick={() => trackWhatsAppClick('header_mobile_drawer_phone')}
+					class="inline-block text-sm font-light text-white/80 transition-colors hover:text-white"
+				>
+					Direct WhatsApp: <span class="font-medium text-white underline underline-offset-4">{SITE_PHONE_DISPLAY}</span>
+				</a>
 				<p class="text-xs text-white/40">English-speaking local drivers available 24/7</p>
 			</div>
 		</div>

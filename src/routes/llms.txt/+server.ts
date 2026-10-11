@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import { tourPackages } from '#lib/data';
-import { SITE_URL, SITE_NAME, SITE_PHONE, SITE_EMAIL } from '#lib/data/seo';
+import { SITE_URL, SITE_NAME, SITE_PHONE, SITE_EMAIL, WHATSAPP_DIRECT_URL } from '#lib/data/seo';
 
 export const prerender = true;
 
@@ -30,7 +30,7 @@ ${tourPackages
 - **Customization**: Itineraries can be adjusted dynamically on the day in consultation with the driver.
 
 ## Contact & Direct Booking
-- **WhatsApp Concierge**: https://wa.me/6281234567890 (${SITE_PHONE})
+- **WhatsApp Concierge**: ${WHATSAPP_DIRECT_URL} (${SITE_PHONE})
 - **Email**: ${SITE_EMAIL}
 - **Website**: ${SITE_URL}
 

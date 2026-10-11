@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import { tourPackages } from '#lib/data';
-import { SITE_URL, SITE_NAME, SITE_PHONE, SITE_EMAIL } from '#lib/data/seo';
+import { SITE_URL, SITE_NAME, SITE_PHONE, SITE_EMAIL, WHATSAPP_DIRECT_URL } from '#lib/data/seo';
 
 export const prerender = true;
 
@@ -50,7 +50,7 @@ ${addonsStr ? `${addonsStr}\n` : ''}${pickupStr ? `${pickupStr}\n` : ''}`;
   - More than 24 hours prior: 100% free cancellation.
   - Less than 12 hours prior: Up to 50% fee may apply.
   - Same-day no-show: Full fee may apply.
-- **Direct WhatsApp Concierge**: ${SITE_PHONE} (https://wa.me/6281234567890)
+- **Direct WhatsApp Concierge**: ${SITE_PHONE} (${WHATSAPP_DIRECT_URL})
 - **Email**: ${SITE_EMAIL}
 `.trim();
 

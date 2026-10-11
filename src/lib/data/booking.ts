@@ -1,6 +1,7 @@
 import stepPlanImg from '../assets/images/illustrations/step-01-plan.webp';
 import stepChatImg from '../assets/images/illustrations/step-02-chat.webp';
 import stepTourImg from '../assets/images/illustrations/step-03-tour.webp';
+import { SITE_PHONE_RAW, DEFAULT_WHATSAPP_MESSAGE } from './contact';
 
 export interface BookingStep {
 	step: string;
@@ -59,6 +60,6 @@ export const howToBookData: HowToBookData = {
 	guaranteeTitle: '- Zero Deposit & 100% Private Vehicle',
 	guaranteeDescription:
 		'Every Surya Bali Tour is 100% private for your party—never shared with strangers. Plans changed? Enjoy complimentary rescheduling or cancellation up to 24 hours prior with zero fees.',
-	whatsappNumber: '6281234567890',
-	whatsappMessage: 'Hi Surya Bali Tour! I would like to inquire about booking a private tour.'
+	whatsappNumber: SITE_PHONE_RAW,
+	whatsappMessage: DEFAULT_WHATSAPP_MESSAGE
 };

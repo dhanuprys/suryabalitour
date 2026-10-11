@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
-	import { generateFaqSchema, generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
+	import { generateFaqSchema, generateBreadcrumbSchema, SITE_URL, WHATSAPP_DIRECT_URL, SITE_EMAIL } from '#lib/data/seo';
 
 	const sections = [
 		{
@@ -200,10 +200,16 @@
 						<h3 class="text-xl font-bold text-white sm:text-2xl">Questions about these terms?</h3>
 						<p class="text-xs font-light text-white/70 sm:text-sm">
 							Email <a
-								href="mailto:infosuryabalitour@gmail.com"
+								href="mailto:{SITE_EMAIL}"
 								class="break-all text-white underline underline-offset-4"
-								>infosuryabalitour@gmail.com</a
-							> or message us directly on WhatsApp.
+								>{SITE_EMAIL}</a
+							> or <a
+								href={WHATSAPP_DIRECT_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-white underline underline-offset-4"
+								>message us directly on WhatsApp</a
+							>.
 						</p>
 					</div>
 					<a

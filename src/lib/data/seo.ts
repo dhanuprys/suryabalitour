@@ -1,9 +1,9 @@
 import type { TourPackage } from './tours';
+import { SITE_PHONE, SITE_EMAIL } from './contact';
+export * from './contact';
 
 export const SITE_URL = 'https://suryabalitour.com';
 export const SITE_NAME = 'Surya Bali Tour';
-export const SITE_PHONE = '+62 812-3456-7890';
-export const SITE_EMAIL = 'infosuryabalitour@gmail.com';
 
 /**
  * Generate Schema.org TravelAgency / LocalBusiness JSON-LD

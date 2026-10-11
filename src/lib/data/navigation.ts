@@ -1,3 +1,5 @@
+import { SITE_PHONE_DISPLAY, WHATSAPP_DIRECT_URL, SITE_EMAIL } from './contact';
+
 export interface NavItem {
 	label: string;
 	href: string;
@@ -24,7 +26,8 @@ export interface SocialLink {
 export const headerNavItems: NavItem[] = [
 	{ label: 'TOURS', href: '/packages' },
 	{ label: 'ABOUT', href: '/about' },
-	{ label: 'TERMS', href: '/terms' }
+	{ label: 'TERMS', href: '/terms' },
+	{ label: 'CONTACT', href: WHATSAPP_DIRECT_URL }
 ];
 
 export const socialLinks: SocialLink[] = [
@@ -54,9 +57,9 @@ export const socialLinks: SocialLink[] = [
 	},
 	{
 		name: 'WhatsApp',
-		handle: '+62 812-3456-7890',
+		handle: SITE_PHONE_DISPLAY,
 		subtitle: 'Direct Private Concierge',
-		href: 'https://wa.me/6281234567890',
+		href: WHATSAPP_DIRECT_URL,
 		iconPath:
 			'M12.031 0C5.394 0 0 5.394 0 12.031c0 2.119.553 4.184 1.603 6.007L.062 24l6.137-1.61a11.97 11.97 0 0 0 5.832 1.504l.005-.001c6.634 0 12.028-5.394 12.028-12.032C24.064 5.394 18.67 0 12.031 0zm0 21.996a9.957 9.957 0 0 1-5.076-1.39l-.364-.216-3.774.99 1.008-3.678-.236-.376A9.955 9.955 0 1 1 12.031 22z'
 	}
@@ -82,8 +85,8 @@ export const footerNavSections: FooterNavSection[] = [
 	{
 		title: 'Contact',
 		links: [
-			{ label: 'WhatsApp Concierge', href: 'https://wa.me/6281234567890' },
-			{ label: 'infosuryabalitour@gmail.com', href: 'mailto:infosuryabalitour@gmail.com' },
+			{ label: `WhatsApp: ${SITE_PHONE_DISPLAY}`, href: WHATSAPP_DIRECT_URL },
+			{ label: SITE_EMAIL, href: `mailto:${SITE_EMAIL}` },
 			{ label: 'Denpasar & Ubud, Bali', href: '/about' }
 		]
 	}

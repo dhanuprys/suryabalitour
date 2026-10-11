@@ -1,3 +1,4 @@
+export * from './contact';
 export * from './navigation';
 export * from './partners';
 export * from './destinations';

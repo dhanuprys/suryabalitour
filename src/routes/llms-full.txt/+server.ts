@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import { tourPackages } from '#lib/data';
-import { SITE_URL, SITE_NAME, SITE_PHONE, SITE_EMAIL } from '#lib/data/seo';
+import { SITE_URL, SITE_NAME, SITE_PHONE, SITE_EMAIL, WHATSAPP_DIRECT_URL } from '#lib/data/seo';
 
 export const prerender = true;
 
@@ -61,7 +61,7 @@ ${goodToKnow ? `${goodToKnow}\n` : ''}${addons ? `${addons}\n` : ''}${pickupArea
 ## Contact Information
 - Brand: ${SITE_NAME}
 - Headquarters: Denpasar and Ubud, Bali, Indonesia
-- WhatsApp Direct Concierge: ${SITE_PHONE} (https://wa.me/6281234567890)
+- WhatsApp Direct Concierge: ${SITE_PHONE} (${WHATSAPP_DIRECT_URL})
 - Official Email: ${SITE_EMAIL}
 - Official Website: ${SITE_URL}
 - Operating Hours: 07:00 – 22:00 WITA (UTC+8), 7 days a week
