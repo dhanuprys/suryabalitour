@@ -114,23 +114,23 @@
 	/>
 	<link rel="canonical" href="{SITE_URL}/packages/{tour.slug}" />
 	<meta property="og:title" content="{tour.title} | Surya Bali Tour" />
-	<meta property="og:description" content="{tour.overview}" />
+	<meta property="og:description" content={tour.overview} />
 	<meta property="og:url" content="{SITE_URL}/packages/{tour.slug}" />
 	<meta property="og:type" content="website" />
-	<meta property="og:image" content="{tour.heroImage}" />
+	<meta property="og:image" content={tour.heroImage} />
 	<meta name="twitter:title" content="{tour.title} | Surya Bali Tour" />
-	<meta name="twitter:description" content="{tour.overview}" />
-	<meta name="twitter:image" content="{tour.heroImage}" />
+	<meta name="twitter:description" content={tour.overview} />
+	<meta name="twitter:image" content={tour.heroImage} />
 	{@html `<script type="application/ld+json">${JSON.stringify(tourSchema)}</script>`}
 	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`}
 </svelte:head>
 
 <HeaderBlock />
 
-<main class="min-h-screen bg-black text-white pb-24 md:pb-0">
+<main class="min-h-screen bg-black pb-24 text-white md:pb-0">
 	<!-- Full-bleed Hero Banner -->
 	<section
-		class="relative flex min-h-[460px] h-[60vh] sm:h-[70vh] sm:min-h-[520px] w-full items-end bg-black px-6 pb-12 sm:px-12 sm:pb-16 md:px-16 lg:px-24"
+		class="relative flex h-[60vh] min-h-[460px] w-full items-end bg-black px-6 pb-12 sm:h-[70vh] sm:min-h-[520px] sm:px-12 sm:pb-16 md:px-16 lg:px-24"
 	>
 		<img
 			alt={tour.title}
@@ -148,7 +148,9 @@
 				<span>/</span>
 				<a href="/packages" class="transition-colors hover:text-white">Packages</a>
 				<span>/</span>
-				<span class="font-semibold text-white truncate max-w-[200px] sm:max-w-none">{tour.title}</span>
+				<span class="max-w-[200px] truncate font-semibold text-white sm:max-w-none"
+					>{tour.title}</span
+				>
 			</nav>
 
 			<!-- Top Badges -->
@@ -166,10 +168,12 @@
 			</div>
 
 			<!-- Title & Tagline -->
-			<h1 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight">
+			<h1
+				class="text-3xl leading-tight font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+			>
 				{tour.title}
 			</h1>
-			<p class="max-w-2xl text-base sm:text-lg font-light text-white/80 md:text-xl leading-relaxed">
+			<p class="max-w-2xl text-base leading-relaxed font-light text-white/80 sm:text-lg md:text-xl">
 				{tour.tagline}
 			</p>
 		</div>
@@ -227,7 +231,7 @@
 					</div>
 
 					<div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-						{#each tour.whatTheyWillSee as highlight (highlight.id)}
+						{#each tour.whatTheyWillSee as highlight, idx (`${highlight.id}-${idx}`)}
 							<div class="group space-y-4">
 								{#if highlight.image}
 									<div class="aspect-16/10 overflow-hidden rounded-2xl">
@@ -377,7 +381,7 @@
 			<!-- Right Column: Sticky Booking Form Sidebar (1 Col) -->
 			<aside id="booking-card" class="relative scroll-mt-24">
 				<div
-					class="sticky top-28 space-y-6 rounded-2xl sm:rounded-3xl border border-white/20 bg-neutral-900/90 p-5 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl"
+					class="sticky top-28 space-y-6 rounded-2xl border border-white/20 bg-neutral-900/90 p-5 shadow-2xl backdrop-blur-xl sm:rounded-3xl sm:p-6 md:p-8"
 				>
 					<!-- Price Summary Header -->
 					<div class="space-y-1 border-b border-white/10 pb-5">
@@ -444,7 +448,7 @@
 						</div>
 					{:else}
 						<!-- Booking Inquiry Form -->
-						<form onsubmit={handleFormSubmit} class="space-y-4">
+						<form id="booking-form" onsubmit={handleFormSubmit} class="space-y-4">
 							<h3 class="text-xl font-bold text-white">Book / Inquire Tour</h3>
 
 							<!-- Name Field -->
@@ -643,7 +647,8 @@
 							</div>
 
 							<p class="text-center text-[10px] text-white/40">
-								No upfront credit card required. We verify availability and confirm directly on WhatsApp or Email.
+								No upfront credit card required. We verify availability and confirm directly on
+								WhatsApp or Email.
 							</p>
 						</form>
 					{/if}
@@ -735,7 +740,7 @@
 
 							<!-- Highlights Preview -->
 							<div class="flex flex-wrap gap-1.5 pt-2">
-								{#each rec.whatTheyWillSee.slice(0, 2) as item (item.id)}
+								{#each rec.whatTheyWillSee.slice(0, 2) as item, idx (`${item.id}-${idx}`)}
 									<span class="rounded-md border border-white/10 px-2 py-0.5 text-xs text-white/50">
 										{item.title}
 									</span>
@@ -815,7 +820,7 @@
 >
 	<div>
 		<div class="text-base font-bold text-white">${totalPrice} {tour.currency}</div>
-		<div class="text-[10px] uppercase tracking-wider text-white/50">{tour.tourType}</div>
+		<div class="text-[10px] tracking-wider text-white/50 uppercase">{tour.tourType}</div>
 	</div>
 	<div class="flex items-center gap-2">
 		<a
@@ -839,7 +844,7 @@
 		</a>
 		<a
 			href="#booking-card"
-			class="rounded-xl bg-white px-5 py-2.5 text-xs font-semibold text-black transition-all hover:bg-white/90 shadow-md active:scale-95"
+			class="rounded-xl bg-white px-5 py-2.5 text-xs font-semibold text-black shadow-md transition-all hover:bg-white/90 active:scale-95"
 		>
 			Book / Inquire
 		</a>

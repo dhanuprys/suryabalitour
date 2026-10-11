@@ -25,6 +25,18 @@
       "skillPath": ".claude/skills/brand/SKILL.md",
       "computedHash": "5c99d65bec448b3dda25049f6437a1d8d8777a705a2c597fbe5516dfeeb0a487"
     },
+    "competitor-profiling": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/competitor-profiling/SKILL.md",
+      "computedHash": "cfae4d2a5b6a4b08784aa63784147d8baad61eb9696840b96e182ef4893fd736"
+    },
+    "competitors": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/competitors/SKILL.md",
+      "computedHash": "38efdc0ec5c612ca82c392c026038834da6da078a79e92dd89cd8d3d08f0519b"
+    },
     "copy-editing": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",

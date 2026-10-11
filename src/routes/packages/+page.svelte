@@ -125,7 +125,10 @@
 		property="og:image"
 		content="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1600&auto=format&fit=crop"
 	/>
-	<meta name="twitter:title" content="Private Bali Tour Packages & Day Charters | Surya Bali Tour" />
+	<meta
+		name="twitter:title"
+		content="Private Bali Tour Packages & Day Charters | Surya Bali Tour"
+	/>
 	<meta
 		name="twitter:description"
 		content="Explore private full-day Bali tours with dedicated local drivers. Transparent pricing per vehicle, fuel included, free cancellation."
@@ -415,7 +418,7 @@
 
 							<!-- Highlights inline tags -->
 							<div class="flex flex-wrap gap-1.5 pt-1">
-								{#each pkg.whatTheyWillSee.slice(0, 3) as item (item.id)}
+								{#each pkg.whatTheyWillSee.slice(0, 3) as item, idx (`${item.id}-${idx}`)}
 									<span class="rounded-md border border-white/10 px-2 py-0.5 text-xs text-white/50">
 										{item.title}
 									</span>

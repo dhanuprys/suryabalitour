@@ -1,3 +1,5 @@
+import { tourPackages } from './tours';
+
 export interface DestinationCategory {
 	id: string;
 	label: string;
@@ -5,88 +7,111 @@ export interface DestinationCategory {
 
 export interface ExploreDestination {
 	id: string;
+	slug: string;
 	categoryLabel: string;
 	title: string;
 	description: string;
 	image: string;
 	category: string;
+	priceFrom?: number;
+	duration?: string;
 }
 
 export const destinationCategories: DestinationCategory[] = [
-	{ id: 'all', label: 'All Destinations' },
-	{ id: 'nature', label: 'Nature' },
-	{ id: 'man-made', label: 'Man-Made' }
+	{ id: 'all', label: 'All Packages' },
+	{ id: 'ubud', label: 'Ubud & Culture' },
+	{ id: 'islands', label: 'Nusa Penida & Islands' },
+	{ id: 'coastal', label: 'Beaches & Temples' },
+	{ id: 'adventure', label: 'Water & Adventure' }
 ];
 
-export const exploreDestinations: ExploreDestination[] = [
+interface FeaturedTourConfig {
+	slug: string;
+	category: 'ubud' | 'islands' | 'coastal' | 'adventure';
+	categoryLabel: string;
+}
+
+const featuredTourConfigs: FeaturedTourConfig[] = [
 	{
-		id: '1',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'ubud-tour-day1',
+		category: 'ubud',
+		categoryLabel: 'Ubud Adventure'
 	},
 	{
-		id: '2',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'nusa-penida-west-trip-bali',
+		category: 'islands',
+		categoryLabel: 'Island Wonder'
 	},
 	{
-		id: '3',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'jatiluwih-and-tanah-lot-tour',
+		category: 'ubud',
+		categoryLabel: 'UNESCO Rice Terrace'
 	},
 	{
-		id: '4',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'kintamani-mount-batur',
+		category: 'adventure',
+		categoryLabel: 'Volcano & Geopark'
 	},
 	{
-		id: '5',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'east-trip-nusa-penida',
+		category: 'islands',
+		categoryLabel: 'Diamond Beach Escape'
 	},
 	{
-		id: '6',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'bali-beach-tour',
+		category: 'coastal',
+		categoryLabel: 'Iconic Coastline'
 	},
 	{
-		id: '7',
-		categoryLabel: 'Natural Wonder',
-		title: 'The Matternhorn',
-		description:
-			'Step into the Eternal City, where history, culture and breathtaking architecture meet.',
-		image:
-			'https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-		category: 'nature'
+		slug: 'ubud-day-tour-3',
+		category: 'ubud',
+		categoryLabel: 'Balinese Heritage'
+	},
+	{
+		slug: 'nusa-dua-tour',
+		category: 'coastal',
+		categoryLabel: 'Watersports & Sunset'
+	},
+	{
+		slug: 'blue-lagoon-day-tour',
+		category: 'adventure',
+		categoryLabel: 'Coral Reef Snorkeling'
+	},
+	{
+		slug: 'bali-besakih-tour',
+		category: 'coastal',
+		categoryLabel: 'Sacred Mother Temple'
+	},
+	{
+		slug: 'dolphin-tour',
+		category: 'adventure',
+		categoryLabel: 'Lovina Sunrise Dolphins'
+	},
+	{
+		slug: 'nusa-lembongan-tour',
+		category: 'islands',
+		categoryLabel: 'Tropical Haven'
 	}
 ];
+
+const items: ExploreDestination[] = [];
+for (const config of featuredTourConfigs) {
+	const pkg = tourPackages.find((p) => p.slug === config.slug);
+	if (pkg) {
+		items.push({
+			id: pkg.id,
+			slug: pkg.slug,
+			categoryLabel: config.categoryLabel,
+			title: pkg.title,
+			description:
+				pkg.tagline ||
+				(pkg.overview.length > 140 ? `${pkg.overview.slice(0, 140)}...` : pkg.overview),
+			image: pkg.heroImage,
+			category: config.category,
+			priceFrom: pkg.priceFrom,
+			duration: pkg.duration
+		});
+	}
+}
+
+export const exploreDestinations: ExploreDestination[] = items;

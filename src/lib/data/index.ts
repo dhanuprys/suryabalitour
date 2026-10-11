@@ -4,6 +4,6 @@ export * from './destinations';
 export * from './wonders';
 export * from './guides';
 export * from './spotlight';
-export * from './news';
+export * from './booking';
 export * from './tours';
 export * from './seo';

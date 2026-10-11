@@ -1,5 +1,8 @@
-export interface MonthlySpotlight {
+import { tourPackages } from './tours';
+
+export interface SpotlightSlide {
 	id: string;
+	tourSlug: string;
 	subtitle: string;
 	title: string;
 	description: string;
@@ -8,15 +11,68 @@ export interface MonthlySpotlight {
 	bgImage: string;
 }
 
-export const monthlySpotlight: MonthlySpotlight = {
-	id: 'colosseum-spotlight',
-	subtitle: '- Monthly Spotlight',
-	title: 'The Great Colloseum',
-	description:
-		'Step into the legacy of human ambition. From timeless monuments to breathtaking landmarks, explore our currated guides',
-	buttonText: 'Discover Colloseum',
-	image:
-		'https://plus.unsplash.com/premium_photo-1678303396234-4180231353df?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-	bgImage:
-		'https://plus.unsplash.com/premium_photo-1678303396234-4180231353df?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-};
+const spotlightConfigs = [
+	{
+		slug: 'kintamani-mount-batur',
+		subtitle: '- Monthly Spotlight',
+		title: 'Sunrise Over Mount Batur',
+		description:
+			'Witness dawn break across the volcanic caldera in a rugged 4WD Jeep, followed by natural hot springs overlooking majestic Lake Batur.',
+		buttonText: 'Discover Tour'
+	},
+	{
+		slug: 'nusa-penida-tour',
+		subtitle: '- Monthly Spotlight',
+		title: 'Cliffs of Nusa Penida',
+		description:
+			'Stand above the turquoise waters of Kelingking Beach and snorkel with gentle manta rays in secluded crystal lagoons.',
+		buttonText: 'Discover Tour'
+	},
+	{
+		slug: 'ubud-tour-day1',
+		subtitle: '- Monthly Spotlight',
+		title: 'Ubud River Rafting & Jungle Swing',
+		description:
+			'Navigate lush rainforest gorges, cascade down pristine river rapids, and fly above tropical valleys on the famous Bali Swing.',
+		buttonText: 'Discover Tour'
+	},
+	{
+		slug: 'jatiluwih-and-tanah-lot-tour',
+		subtitle: '- Monthly Spotlight',
+		title: 'Jatiluwih & Sunset Tanah Lot',
+		description:
+			'Wander through UNESCO-protected stepped emerald hills in Tabanan and catch golden hour at the offshore ocean shrine of Tanah Lot.',
+		buttonText: 'Discover Tour'
+	},
+	{
+		slug: 'dolphin-tour',
+		subtitle: '- Monthly Spotlight',
+		title: 'Lovina Sunrise Dolphins & Waterfalls',
+		description:
+			'Cruise alongside playful wild spinner dolphins in a traditional outrigger boat at sunrise before exploring North Bali’s jungle waterfalls.',
+		buttonText: 'Discover Tour'
+	}
+];
+
+export const spotlightSlides: SpotlightSlide[] = spotlightConfigs
+	.map((config) => {
+		const pkg = tourPackages.find((p) => p.slug === config.slug);
+		if (!pkg) return null;
+
+		// Load photo directly from the tour package gallery
+		const photoUrl = pkg.gallery[0]?.url || pkg.heroImage;
+
+		return {
+			id: pkg.id,
+			tourSlug: pkg.slug,
+			subtitle: config.subtitle,
+			title: config.title,
+			description: config.description,
+			buttonText: config.buttonText,
+			image: photoUrl,
+			bgImage: photoUrl
+		};
+	})
+	.filter((slide): slide is SpotlightSlide => slide !== null);
+
+export const monthlySpotlight = spotlightSlides[0];

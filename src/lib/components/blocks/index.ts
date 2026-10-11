@@ -4,5 +4,5 @@ export { default as ExploreDestinationsBlock } from './ExploreDestinationsBlock.
 export { default as WondersSectionBlock } from './WondersSectionBlock.svelte';
 export { default as CuratedGuidesBlock } from './CuratedGuidesBlock.svelte';
 export { default as SpotlightBlock } from './SpotlightBlock.svelte';
-export { default as LatestNewsBlock } from './LatestNewsBlock.svelte';
+export { default as HowToBookBlock } from './HowToBookBlock.svelte';
 export { default as FooterBlock } from './FooterBlock.svelte';

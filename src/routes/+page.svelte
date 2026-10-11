@@ -6,7 +6,7 @@
 		WondersSectionBlock,
 		CuratedGuidesBlock,
 		SpotlightBlock,
-		LatestNewsBlock,
+		HowToBookBlock,
 		FooterBlock
 	} from '#lib/components/blocks';
 	import { generateAgencySchema } from '#lib/data/seo';
@@ -52,7 +52,7 @@
 	<WondersSectionBlock />
 	<CuratedGuidesBlock />
 	<SpotlightBlock />
-	<LatestNewsBlock />
+	<HowToBookBlock />
 	<div class="pt-16 sm:pt-24"></div>
 </main>
 
