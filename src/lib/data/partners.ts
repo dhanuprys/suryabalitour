@@ -16,20 +16,20 @@ export const mediaPartners: MediaPartner[] = [
 		name: 'GetYourGuide',
 		alt: 'get your guide',
 		logo: GetYourGuideLogo,
-		heightClass: 'h-[3.5rem]'
+		heightClass: 'h-[1.5rem] md:h-[3rem]'
 	},
 	{
 		id: 'tripadvisor',
 		name: 'TripAdvisor',
 		alt: 'tripadvisor logo',
 		logo: TripadvisorLogo,
-		heightClass: 'h-[2.5rem]'
+		heightClass: 'h-[1.3rem] md:h-[2rem]'
 	},
 	{
 		id: 'viator',
 		name: 'Viator',
 		alt: 'viator logo',
 		logo: ViatorLogo,
-		heightClass: 'h-[2.5rem]'
+		heightClass: 'h-[1.4rem] md:h-[2rem]'
 	}
 ];

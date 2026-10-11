@@ -33,24 +33,23 @@
 		class="pointer-events-none absolute top-0 left-0 h-32 w-full bg-linear-to-b from-black/80 via-black/40 to-transparent"
 	></div>
 
-	<div class="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-6 sm:px-10 lg:px-16">
+	<div
+		class="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-6 sm:px-10 lg:px-16"
+	>
 		<a href="/" class="z-40 inline-flex items-center" onclick={closeMenu}>
 			<img
 				alt="Surya Bali Tour Logo"
 				src={BrandLogo}
-				class="w-[120px] sm:w-[140px] brightness-0 invert-100 transition-opacity hover:opacity-90"
+				class="w-[120px] brightness-0 invert-100 transition-opacity hover:opacity-90 sm:w-[140px]"
 			/>
 		</a>
 
 		<!-- Desktop Navigation -->
 		<nav class="hidden md:block">
-			<ul class="flex items-center gap-10 font-light text-sm uppercase tracking-wider">
+			<ul class="flex items-center gap-10 text-sm font-light tracking-wider uppercase">
 				{#each headerNavItems as item (item.href)}
 					<li>
-						<a
-							href={item.href}
-							class="text-white/90 transition-colors hover:text-white"
-						>
+						<a href={item.href} class="text-white/90 transition-colors hover:text-white">
 							{item.label}
 						</a>
 					</li>
@@ -121,8 +120,8 @@
 				</ul>
 			</nav>
 
-			<div class="border-t border-white/10 pt-6 space-y-3">
-				<p class="text-xs uppercase tracking-widest text-white/50">Private Tour Assistance</p>
+			<div class="space-y-3 border-t border-white/10 pt-6">
+				<p class="text-xs tracking-widest text-white/50 uppercase">Private Tour Assistance</p>
 				<p class="text-sm font-light text-white/80">
 					Direct WhatsApp: <span class="font-medium text-white">+62 812-3456-7890</span>
 				</p>
@@ -131,4 +130,3 @@
 		</div>
 	{/if}
 </header>
-

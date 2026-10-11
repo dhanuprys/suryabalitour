@@ -2,19 +2,19 @@ import type { TourPackage } from '#lib/data/tours';
 import { browser } from '$app/env';
 
 // Default Google Analytics 4 Measurement ID (Can be replaced with production ID or env variable)
-export const GA_MEASUREMENT_ID = 'G-E8W7Y1ZXYZ';
+export const GA_MEASUREMENT_ID = 'G-2Y5LM54W1V';
 
 declare global {
 	interface Window {
-		dataLayer?: any[];
-		gtag?: (...args: any[]) => void;
+		dataLayer?: unknown[];
+		gtag?: (...args: unknown[]) => void;
 	}
 }
 
 /**
  * Universal safe helper to push events to Google Analytics 4 (gtag.js)
  */
-export function gtag(...args: any[]) {
+export function gtag(...args: unknown[]) {
 	if (!browser) return;
 	if (typeof window !== 'undefined') {
 		window.dataLayer = window.dataLayer || [];
@@ -45,7 +45,7 @@ export function trackPageView(path?: string, title?: string) {
 /**
  * Generic GA4 Event Tracker
  */
-export function trackEvent(eventName: string, params: Record<string, any> = {}) {
+export function trackEvent(eventName: string, params: Record<string, unknown> = {}) {
 	if (!browser) return;
 	gtag('event', eventName, params);
 }

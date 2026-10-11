@@ -5,7 +5,10 @@
 	const whatsappUrl = `https://wa.me/${howToBookData.whatsappNumber}?text=${encodeURIComponent(howToBookData.whatsappMessage)}`;
 </script>
 
-<section id="how-to-book" class="space-y-12 px-6 pt-16 sm:space-y-16 sm:px-12 sm:pt-24 md:px-16 lg:px-24">
+<section
+	id="how-to-book"
+	class="space-y-12 px-6 pt-16 sm:space-y-16 sm:px-12 sm:pt-24 md:px-16 lg:px-24"
+>
 	<!-- Section Header -->
 	<div class="mx-auto flex max-w-2xl flex-col items-center space-y-3 text-center">
 		<span class="text-xs font-semibold tracking-widest text-neutral-500 uppercase">
@@ -14,7 +17,7 @@
 		<h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
 			{howToBookData.title}
 		</h2>
-		<p class="text-sm font-light leading-relaxed text-neutral-600 sm:text-base">
+		<p class="text-sm leading-relaxed font-light text-neutral-600 sm:text-base">
 			{howToBookData.description}
 		</p>
 	</div>
@@ -52,10 +55,12 @@
 				<!-- Step Content -->
 				<div class="flex flex-1 flex-col justify-between space-y-3">
 					<div class="space-y-2">
-						<h3 class="text-xl font-bold tracking-tight text-neutral-900 transition-colors group-hover:text-black">
+						<h3
+							class="text-xl font-bold tracking-tight text-neutral-900 transition-colors group-hover:text-black"
+						>
 							{step.title}
 						</h3>
-						<p class="text-sm font-light leading-relaxed text-neutral-600">
+						<p class="text-sm leading-relaxed font-light text-neutral-600">
 							{step.description}
 						</p>
 					</div>
@@ -71,14 +76,16 @@
 	</div>
 
 	<!-- Narrative & Action Footer (Site Standard Pattern) -->
-	<div class="grid grid-cols-1 gap-6 border-t border-neutral-200/80 pt-8 sm:pt-10 md:grid-cols-2 md:gap-12">
+	<div
+		class="grid grid-cols-1 gap-6 border-t border-neutral-200/80 pt-8 sm:pt-10 md:grid-cols-2 md:gap-12"
+	>
 		<div>
 			<p class="text-base font-semibold tracking-wide text-neutral-900 sm:text-lg">
 				{howToBookData.guaranteeTitle}
 			</p>
 		</div>
 		<div class="space-y-4">
-			<p class="text-sm font-light leading-relaxed text-neutral-600 sm:text-base">
+			<p class="text-sm leading-relaxed font-light text-neutral-600 sm:text-base">
 				{howToBookData.guaranteeDescription}
 			</p>
 			<div class="flex flex-wrap items-center gap-3 pt-2">

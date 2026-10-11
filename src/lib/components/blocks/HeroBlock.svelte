@@ -9,14 +9,14 @@
 		alt="Scenic Bali Landscape"
 		src="https://images.unsplash.com/photo-1558005530-a7958896ec60?q=80&w=1600&auto=format&fit=crop"
 	/>
-	<div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black"></div>
+	<div class="absolute inset-0 bg-linear-to-b from-black/80 via-transparent to-black"></div>
 
 	<div
 		class="relative z-10 flex min-h-screen w-full flex-col justify-between px-6 pt-32 pb-12 sm:px-12 md:px-16 lg:px-24"
 	>
-		<div class="mx-auto my-auto w-full max-w-5xl space-y-3 pt-12 text-left">
+		<div class="mx-auto my-auto w-full max-w-6xl space-y-3 pt-12 text-left">
 			<h1
-				class="text-4xl leading-[1.05] font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl"
+				class="text-5xl leading-[1.05] font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl"
 			>
 				Discover<br />Bali Wonders
 			</h1>
@@ -45,9 +45,11 @@
 			</div>
 		</div>
 
-		<div class="mx-auto w-full max-w-5xl pt-12 pb-4 text-center">
+		<div
+			class="mx-auto flex w-full max-w-5xl flex-col items-center justify-center pt-12 pb-4 md:items-end"
+		>
 			<p class="pb-4 text-xs font-semibold tracking-widest text-white/50 uppercase">
-				Official Media & Travel Partners
+				Travel Partners
 			</p>
 			<ul
 				class="flex flex-wrap items-center justify-center gap-6 opacity-80 brightness-0 invert-100 sm:gap-10"

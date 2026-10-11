@@ -28,7 +28,7 @@
 
 {#if slide}
 	<section
-		class="relative mt-16 sm:mt-24 overflow-hidden bg-black px-6 py-16 sm:px-12 sm:py-24 md:px-16 lg:px-24"
+		class="relative mt-16 overflow-hidden bg-black px-6 py-16 sm:mt-24 sm:px-12 sm:py-24 md:px-16 lg:px-24"
 		onmouseenter={() => (isHovered = true)}
 		onmouseleave={() => (isHovered = false)}
 		aria-label="Monthly Tour Spotlight"
@@ -39,8 +39,8 @@
 				alt="Background atmosphere"
 				class="absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out {idx ===
 				currentIndex
-					? 'opacity-15 z-0'
-					: 'opacity-0 z-0 pointer-events-none'}"
+					? 'z-0 opacity-15'
+					: 'pointer-events-none z-0 opacity-0'}"
 				src={item.bgImage}
 				aria-hidden="true"
 			/>
@@ -55,18 +55,18 @@
 						<div
 							class="space-y-4 text-white transition-all duration-700 ease-in-out {idx ===
 							currentIndex
-								? 'relative z-10 opacity-100 translate-y-0'
-								: 'pointer-events-none absolute inset-0 z-0 opacity-0 translate-y-2'}"
+								? 'relative z-10 translate-y-0 opacity-100'
+								: 'pointer-events-none absolute inset-0 z-0 translate-y-2 opacity-0'}"
 						>
 							<span class="text-xs font-semibold tracking-widest text-white/60 uppercase">
 								{item.subtitle}
 							</span>
 							<h3
-								class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl leading-tight"
+								class="text-3xl leading-tight font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
 							>
 								{item.title}
 							</h3>
-							<p class="text-sm font-light leading-relaxed text-white/80 sm:text-base">
+							<p class="text-sm leading-relaxed font-light text-white/80 sm:text-base">
 								{item.description}
 							</p>
 						</div>
@@ -95,11 +95,12 @@
 							</button>
 
 							<div class="flex items-center gap-1.5">
-								{#each spotlightSlides as _, idx (idx)}
+								{#each spotlightSlides, idx (idx)}
 									<button
 										type="button"
 										onclick={() => (currentIndex = idx)}
-										class="h-1 rounded-full transition-all duration-500 ease-out {idx === currentIndex
+										class="h-1 rounded-full transition-all duration-500 ease-out {idx ===
+										currentIndex
 											? 'w-6 bg-white'
 											: 'w-1.5 bg-white/30 hover:bg-white/60'}"
 										aria-label={`Go to slide ${idx + 1}`}
@@ -129,8 +130,8 @@
 						alt={item.title}
 						class="absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-in-out {idx ===
 						currentIndex
-							? 'opacity-100 scale-100 z-10'
-							: 'pointer-events-none opacity-0 scale-105 z-0'}"
+							? 'z-10 scale-100 opacity-100'
+							: 'pointer-events-none z-0 scale-105 opacity-0'}"
 						src={item.image}
 						loading={idx === 0 ? 'eager' : 'lazy'}
 					/>

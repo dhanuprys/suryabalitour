@@ -63,9 +63,7 @@
 				></div>
 				<div class="relative z-10 flex w-full flex-col space-y-2 p-6 text-center text-white">
 					<div class="flex items-center justify-center">
-						<span
-							class="rounded-full border border-white/20 bg-white/10 px-3 py-0.5 text-[10px] font-semibold tracking-wider uppercase backdrop-blur-md"
-						>
+						<span class="px-3 text-[10px] font-semibold tracking-wider uppercase">
 							{guide.title}
 						</span>
 					</div>

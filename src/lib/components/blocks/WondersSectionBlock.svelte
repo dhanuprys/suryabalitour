@@ -21,11 +21,12 @@
 						</span>
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						<h3
-							class="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight"
+							class="text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
 						>
+							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 							{@html wonder.title}
 						</h3>
-						<p class="max-w-xl text-sm font-light leading-relaxed text-white/80 sm:text-base">
+						<p class="max-w-xl text-sm leading-relaxed font-light text-white/80 sm:text-base">
 							{wonder.description}
 						</p>
 						<div class="pt-4">
@@ -49,7 +50,7 @@
 				</div>
 			{:else}
 				<!-- Image Block (Order 2 on mobile, Order 1 on desktop) -->
-				<div class="relative min-h-[320px] order-2 lg:order-1 sm:min-h-[400px] lg:min-h-[60vh]">
+				<div class="relative order-2 min-h-[320px] sm:min-h-[400px] lg:order-1 lg:min-h-[60vh]">
 					<img
 						alt={wonder.tag}
 						class="absolute inset-0 h-full w-full object-cover"
@@ -59,7 +60,7 @@
 
 				<!-- Text Block (Order 1 on mobile, Order 2 on desktop) -->
 				<div
-					class="relative flex min-h-[420px] order-1 lg:order-2 flex-col justify-center bg-black px-6 py-16 text-white sm:px-12 md:px-16 lg:min-h-[60vh] lg:px-20"
+					class="relative order-1 flex min-h-[420px] flex-col justify-center bg-black px-6 py-16 text-white sm:px-12 md:px-16 lg:order-2 lg:min-h-[60vh] lg:px-20"
 				>
 					<img
 						alt="Background texture"
@@ -72,11 +73,12 @@
 						</span>
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						<h3
-							class="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight"
+							class="text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
 						>
+							<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 							{@html wonder.title}
 						</h3>
-						<p class="max-w-xl text-sm font-light leading-relaxed text-white/80 sm:text-base">
+						<p class="max-w-xl text-sm leading-relaxed font-light text-white/80 sm:text-base">
 							{wonder.description}
 						</p>
 						<div class="pt-4">
@@ -93,4 +95,3 @@
 		{/each}
 	</div>
 </section>
-

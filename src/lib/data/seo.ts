@@ -17,7 +17,8 @@ export function generateAgencySchema() {
 		alternateName: 'Surya Bali Tour & Private Driver',
 		url: SITE_URL,
 		logo: `${SITE_URL}/favicon.svg`,
-		image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop',
+		image:
+			'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop',
 		description:
 			'Authentic private Bali day tours, personal driver charters, custom itineraries, and airport transfers guided by native Balinese professionals.',
 		telephone: SITE_PHONE,
@@ -43,15 +44,7 @@ export function generateAgencySchema() {
 		openingHoursSpecification: [
 			{
 				'@type': 'OpeningHoursSpecification',
-				dayOfWeek: [
-					'Monday',
-					'Tuesday',
-					'Wednesday',
-					'Thursday',
-					'Friday',
-					'Saturday',
-					'Sunday'
-				],
+				dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				opens: '07:00',
 				closes: '22:00'
 			}

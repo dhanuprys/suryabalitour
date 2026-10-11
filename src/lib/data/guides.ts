@@ -54,7 +54,7 @@ function getTourLocation(slug: string): string {
 }
 
 function shortenTourTitle(title: string): string {
-	let t = title
+	const t = title
 		.replace(/^Bali\s+/i, '')
 		.replace(/\s*Package.*$/i, '')
 		.replace(/\s*Include.*$/i, '')
@@ -66,7 +66,8 @@ function shortenTourTitle(title: string): string {
 		.replace(/\s+Trip.*$/i, ' Trip')
 		.trim();
 	if (t.toLowerCase().includes('jatiluwih')) return 'Jatiluwih & Tanah Lot';
-	if (t.toLowerCase().includes('atv') || t.toLowerCase().includes('quad bike')) return 'Ubud ATV Quad Bike';
+	if (t.toLowerCase().includes('atv') || t.toLowerCase().includes('quad bike'))
+		return 'Ubud ATV Quad Bike';
 	if (t.toLowerCase().includes('rafting')) return 'Ayung River Rafting';
 	if (t.toLowerCase().includes('batur')) return 'Mount Batur Volcano';
 	if (t.toLowerCase().includes('lagoon')) return 'Blue Lagoon Snorkeling';
@@ -93,7 +94,7 @@ for (let photoIndex = 0; photoIndex < maxPhotosPerTour; photoIndex++) {
 				!photo.caption.toLowerCase().includes('photo') &&
 				!photo.caption.toLowerCase().includes('highlight')
 					? photo.caption
-					: (pkg.whatTheyWillSee[photoIndex]?.title || cleanTourName);
+					: pkg.whatTheyWillSee[photoIndex]?.title || cleanTourName;
 
 			allMoments.push({
 				id: `${pkg.slug}-photo-${photoIndex + 1}`,

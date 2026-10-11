@@ -347,7 +347,7 @@
 									<div class="flex items-center justify-between">
 										<h4 class="font-bold text-white">{addon.name}</h4>
 										<span
-											class="rounded-full px-2.5 py-1 text-xs font-bold {isSelected
+											class="shrink-0 rounded-full px-2.5 py-1 text-xs font-bold {isSelected
 												? 'bg-white text-black'
 												: 'bg-white/10 text-white'}"
 										>
@@ -816,7 +816,7 @@
 <!-- Sticky Mobile Bottom Booking Bar (CRO Enhanced) -->
 <aside
 	aria-label="Quick Booking Bar"
-	class="fixed inset-x-0 bottom-0 z-20 flex items-center justify-between gap-3 border-t border-white/20 bg-neutral-950/95 px-5 py-3.5 backdrop-blur-xl md:hidden"
+	class="fixed inset-x-0 bottom-0 z-20 flex items-center justify-between gap-3 border-t border-white/20 bg-neutral-950/95 px-5 pt-3.5 pb-10 backdrop-blur-xl md:hidden"
 >
 	<div>
 		<div class="text-base font-bold text-white">${totalPrice} {tour.currency}</div>
