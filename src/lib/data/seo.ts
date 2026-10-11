@@ -47,7 +47,7 @@ export function generateAgencySchema() {
 			}
 		],
 		sameAs: [
-			'https://instagram.com/suryabalitour',
+			'https://instagram.com/surya_bali_tour',
 			'https://tiktok.com/@suryabalitour',
 			'https://facebook.com/suryabalitour'
 		]
