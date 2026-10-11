@@ -1,34 +1,61 @@
 <script lang="ts">
 	import { mediaPartners } from '#lib/data';
+	import { trackEvent } from '#lib/analytics';
 </script>
 
-<section class="relative h-screen w-full bg-black">
+<section class="relative min-h-screen w-full overflow-hidden bg-black">
 	<img
-		class="h-full w-full object-cover"
-		alt="Banner"
-		src="https://images.unsplash.com/photo-1558005530-a7958896ec60?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+		class="absolute inset-0 h-full w-full object-cover opacity-60"
+		alt="Scenic Bali Landscape"
+		src="https://images.unsplash.com/photo-1558005530-a7958896ec60?q=80&w=1600&auto=format&fit=crop"
 	/>
-	<div class="absolute top-0 left-0 flex h-screen w-screen items-center px-28">
-		<div class="mx-auto max-w-[80vw] min-w-[80vw] space-y-6 font-bold">
-			<h2 class="text-8xl text-white">Discover<br />Bali Wonders</h2>
-			<p class="max-w-2xl font-light text-white">
-				Uncover hidden gems, taste authentic flavors, and create stories you’ll tell for a lifetime.
-				Your next great adventure is just a click away.
+	<div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black"></div>
+
+	<div
+		class="relative z-10 flex min-h-screen w-full flex-col justify-between px-6 pt-32 pb-12 sm:px-12 md:px-16 lg:px-24"
+	>
+		<div class="mx-auto my-auto w-full max-w-5xl space-y-3 pt-12 text-left">
+			<h1
+				class="text-4xl leading-[1.05] font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl"
+			>
+				Discover<br />Bali Wonders
+			</h1>
+			<p class="max-w-2xl text-base leading-relaxed font-light text-white/80 sm:text-lg">
+				Uncover hidden gems, taste authentic flavors, and create memories you will treasure for a
+				lifetime. Private, personalized, and guided with warm Balinese hospitality.
 			</p>
-			<div class="flex items-center gap-4">
-				<button class="rounded-xl bg-white px-4 py-2 text-xl font-semibold"
-					>Explore Destination</button
+			<div class="flex flex-col items-stretch gap-4 pt-2 sm:flex-row sm:items-center">
+				<a
+					href="/packages"
+					onclick={() =>
+						trackEvent('cta_click', {
+							button_text: 'Explore Tour Packages',
+							location: 'hero'
+						})}
+					class="rounded-xl bg-white px-7 py-3.5 text-center text-sm font-semibold text-black transition-all hover:bg-white/90"
 				>
-				<button class="rounded-xl border border-white px-4 py-2 text-xl font-semibold text-white"
-					>Available Events</button
+					Explore Tour Packages
+				</a>
+				<a
+					href="/about"
+					class="rounded-xl border border-white/30 bg-white/5 px-7 py-3.5 text-center text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/50 hover:bg-white/10"
 				>
+					About Surya Bali
+				</a>
 			</div>
 		</div>
-		<div class="absolute bottom-0 left-1/2 -translate-x-1/2 pb-16">
-			<p class="pb-4 text-center text-white">Media Partner</p>
-			<ul class="inline-flex items-center gap-8 brightness-0 invert-100">
+
+		<div class="mx-auto w-full max-w-5xl pt-12 pb-4 text-center">
+			<p class="pb-4 text-xs font-semibold tracking-widest text-white/50 uppercase">
+				Official Media & Travel Partners
+			</p>
+			<ul
+				class="flex flex-wrap items-center justify-center gap-6 opacity-80 brightness-0 invert-100 sm:gap-10"
+			>
 				{#each mediaPartners as partner (partner.id)}
-					<li><img class={partner.heightClass} alt={partner.alt} src={partner.logo} /></li>
+					<li class="transition-opacity hover:opacity-100">
+						<img class={partner.heightClass} alt={partner.alt} src={partner.logo} />
+					</li>
 				{/each}
 			</ul>
 		</div>

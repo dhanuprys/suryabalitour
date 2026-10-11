@@ -1,6 +1,17 @@
-import { getTourPackageBySlug, getRecommendedTours } from '#lib/data';
+import { getTourPackageBySlug, getRecommendedTours, tourPackages } from '#lib/data';
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { EntryGenerator, PageLoad } from './$types';
+
+export const prerender = true;
+
+/**
+ * Generate all static route entries at build time for prerendering
+ */
+export const entries: EntryGenerator = () => {
+	return tourPackages.map((pkg) => ({
+		packageSlug: pkg.slug
+	}));
+};
 
 export const load: PageLoad = ({ params }) => {
 	const tour = getTourPackageBySlug(params.packageSlug);

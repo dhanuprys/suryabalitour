@@ -88,7 +88,7 @@ export const tourPackages: TourPackage[] = [
 				description:
 					'Wander through a shaded ancient jungle home to over 1,000 playful Balinese long-tailed macaques and moss-covered temples.',
 				image:
-					'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop'
+					'https://images.unsplash.com/photo-1570789210967-2cac24afeb00?q=80&w=800&auto=format&fit=crop'
 			},
 			{
 				id: 'tegenungan',

@@ -6,3 +6,4 @@ export * from './guides';
 export * from './spotlight';
 export * from './news';
 export * from './tours';
+export * from './seo';

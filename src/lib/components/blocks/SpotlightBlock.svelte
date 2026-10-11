@@ -2,25 +2,48 @@
 	import { monthlySpotlight } from '#lib/data';
 </script>
 
-<section class="relative mt-28 grid min-h-[10rem] grid-cols-12 gap-20 bg-black px-28 py-10 py-20">
+<section
+	class="relative mt-16 sm:mt-24 overflow-hidden bg-black px-6 py-16 sm:px-12 sm:py-24 md:px-16 lg:px-24"
+>
 	<img
-		alt="background"
-		class="absolute top-0 left-0 size-full object-cover opacity-10"
+		alt="Background atmosphere"
+		class="absolute inset-0 h-full w-full object-cover opacity-15"
 		src={monthlySpotlight.bgImage}
 	/>
-	<div class="z-10 col-span-4 space-y-6 text-white">
-		<span>{monthlySpotlight.subtitle}</span>
-		<h4 class="text-7xl">{monthlySpotlight.title}</h4>
-		<p class="font-light">
-			{monthlySpotlight.description}
-		</p>
-		<button class="rounded-xl bg-white px-4 py-2 text-black">{monthlySpotlight.buttonText}</button>
-	</div>
-	<div class="relative col-span-8 rounded-2xl bg-green-500">
-		<img
-			alt="clear"
-			class="absolute top-0 left-0 size-full rounded-xl object-cover"
-			src={monthlySpotlight.image}
-		/>
+
+	<div class="relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+		<div class="space-y-5 text-white lg:col-span-5">
+			<span class="text-xs font-semibold tracking-widest text-white/60 uppercase">
+				{monthlySpotlight.subtitle}
+			</span>
+			<h3
+				class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl leading-tight"
+			>
+				{monthlySpotlight.title}
+			</h3>
+			<p class="text-sm font-light leading-relaxed text-white/80 sm:text-base">
+				{monthlySpotlight.description}
+			</p>
+			<div class="pt-2">
+				<a
+					href="/packages"
+					class="inline-block rounded-xl bg-white px-6 py-3 text-xs font-semibold text-black transition-all hover:bg-white/90 sm:text-sm"
+				>
+					{monthlySpotlight.buttonText}
+				</a>
+			</div>
+		</div>
+
+		<div
+			class="relative aspect-4/3 w-full overflow-hidden rounded-2xl shadow-xl sm:aspect-16/10 lg:col-span-7"
+		>
+			<img
+				alt={monthlySpotlight.title}
+				class="h-full w-full object-cover"
+				src={monthlySpotlight.image}
+			/>
+			<div class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent"></div>
+		</div>
 	</div>
 </section>
+

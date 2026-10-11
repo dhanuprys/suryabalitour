@@ -3,55 +3,76 @@
 	import { guideCategories, travelGuides } from '#lib/data';
 
 	let activeCategory = $state('all');
+
+	const displayedGuides = $derived(
+		activeCategory === 'all'
+			? travelGuides
+			: travelGuides.filter((guide) => guide.category === activeCategory)
+	);
 </script>
 
-<section class="space-y-12 pt-20">
-	<div class="flex items-center justify-between px-28">
+<section class="space-y-10 pt-16 sm:space-y-12 sm:pt-24">
+	<!-- Section Header -->
+	<div
+		class="flex flex-col gap-6 px-6 sm:px-12 md:px-16 lg:flex-row lg:items-end lg:justify-between lg:px-24"
+	>
 		<div>
-			<span>- Country of Art</span>
-			<h3 class="text-7xl font-bold">Curated Travel Guides</h3>
-			<p class="mt-2 max-w-2xl">
-				Find your way to the world's greatest wonders. Browse maps, explore destinations, and
-				uncover must-see landmarks
+			<span class="text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+				- Island of Culture & Tradition
+			</span>
+			<h2 class="mt-1 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+				Curated Travel Guides
+			</h2>
+			<p class="mt-2 max-w-2xl text-sm font-light text-neutral-600 sm:text-base">
+				Personalized routes crafted by local Balinese chauffeurs and culture specialists.
+				Experience Bali with total peace of mind.
 			</p>
 		</div>
-		<ul class="inline-flex gap-x-4">
+
+		<!-- Category Filter Pills -->
+		<div class="flex flex-wrap gap-2 sm:gap-3">
 			{#each guideCategories as cat (cat.id)}
 				<button
+					type="button"
 					onclick={() => (activeCategory = cat.id)}
-					class="rounded-xl px-4 py-2 text-sm {activeCategory === cat.id
-						? 'bg-black text-white'
-						: 'border border-black bg-transparent'}"
+					class="min-h-[40px] rounded-xl px-4 py-2 text-xs font-medium transition-all sm:text-sm {activeCategory ===
+					cat.id
+						? 'bg-black text-white shadow-sm'
+						: 'border border-black/20 bg-transparent text-neutral-800 hover:border-black'}"
 				>
 					{cat.label}
 				</button>
 			{/each}
-		</ul>
+		</div>
 	</div>
+
+	<!-- Horizontal Scrollable Guides Slider -->
 	<div
-		class="flex max-w-full [scrollbar-width:none] items-center gap-x-4 overflow-y-auto pl-28 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+		class="flex max-w-full items-stretch gap-4 overflow-x-auto px-6 py-4 [scrollbar-width:none] [-ms-overflow-style:none] sm:gap-6 sm:px-12 md:px-16 lg:px-24 [&::-webkit-scrollbar]:hidden"
 	>
-		{#each travelGuides as guide (guide.id)}
-			<div class="relative flex aspect-square min-w-[24rem] items-end rounded-xl">
+		{#each displayedGuides as guide (guide.id)}
+			<div
+				class="relative flex aspect-square w-[78vw] min-w-[17rem] max-w-[22rem] shrink-0 items-end overflow-hidden rounded-2xl shadow-md sm:w-[20rem] sm:min-w-[20rem] md:w-[22rem] md:min-w-[22rem]"
+			>
 				<img
 					alt={guide.title}
-					class="absolute top-0 left-0 -z-10 h-full w-full rounded-xl object-cover"
+					class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
 					src={guide.image}
 				/>
 				<div
-					class="absolute bottom-0 left-0 -z-9 h-[80%] w-full rounded-b-2xl bg-linear-to-t from-black to-transparent"
+					class="absolute inset-x-0 bottom-0 h-4/5 bg-linear-to-t from-black via-black/60 to-transparent"
 				></div>
-				<div class="flex flex-col space-y-2 px-4 py-10 text-white">
-					<h5 class="text-center text-3xl">{guide.title}</h5>
-					<p class="text-center text-sm font-light">
+				<div class="relative z-10 flex w-full flex-col space-y-2 p-6 text-center text-white">
+					<h3 class="text-2xl font-semibold sm:text-3xl">{guide.title}</h3>
+					<p class="line-clamp-2 text-xs font-light text-white/80 sm:text-sm">
 						{guide.description}
 					</p>
-					<ul class="flex items-center justify-center gap-x-4 pt-4">
-						<li class="inline-flex items-center gap-x-2 text-sm">
+					<ul class="flex items-center justify-center gap-4 pt-3 text-xs sm:text-sm">
+						<li class="inline-flex items-center gap-1.5 opacity-90">
 							<MapPinIcon class="size-4" />
 							{guide.location}
 						</li>
-						<li class="inline-flex items-center gap-x-2 text-sm">
+						<li class="inline-flex items-center gap-1.5 opacity-90">
 							<UsersIcon class="size-4" />
 							{guide.groupType}
 						</li>
@@ -60,17 +81,31 @@
 			</div>
 		{/each}
 	</div>
-	<div class="grid grid-cols-2 px-28">
+
+	<!-- Narrative & Action Footer -->
+	<div
+		class="grid grid-cols-1 gap-6 px-6 sm:px-12 md:grid-cols-2 md:gap-12 md:px-16 lg:px-24"
+	>
 		<div>
-			<p class="font-semibold">- Beauty of Arts, Nature and Wonders</p>
+			<p class="text-base font-semibold tracking-wide text-neutral-800 sm:text-lg">
+				- Authentic Local Knowledge
+			</p>
 		</div>
 		<div class="space-y-4">
-			<p>
-				Find your way to the world's greatest wonders. Browse maps, explore destinations, and
-				uncover must-see landmarks. Witness Earth's breathtaking masterpieces - from lust osses and
-				towering to vast deserts and untouched forests. Find your way to the world's greated wonder
+			<p class="text-sm font-light leading-relaxed text-neutral-600 sm:text-base">
+				Our drivers are native Balinese storytellers who know every scenic shortcut, sunrise spot,
+				and quiet temple courtyard. Skip the congested queues and experience the island at your own
+				leisurely rhythm.
 			</p>
-			<button class="rounded-xl bg-black px-4 py-2 text-white">Explore All Destinations</button>
+			<div>
+				<a
+					href="/packages"
+					class="inline-block rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-neutral-800"
+				>
+					View All Private Packages
+				</a>
+			</div>
 		</div>
 	</div>
 </section>
+

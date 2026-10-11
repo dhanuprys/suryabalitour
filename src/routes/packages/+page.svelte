@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import { tourPackages } from '#lib/data';
+	import { generateBreadcrumbSchema } from '#lib/data/seo';
+	import { trackTourList, trackSearch } from '#lib/analytics';
+
+	const breadcrumbSchema = generateBreadcrumbSchema([
+		{ name: 'Home', url: '/' },
+		{ name: 'Packages', url: '/packages' }
+	]);
 
 	let searchQuery = $state('');
 	let selectedType = $state<string>('All');
@@ -55,6 +62,22 @@
 		currentPage = 1;
 	});
 
+	// Track catalog category views (GA4 view_item_list)
+	$effect(() => {
+		trackTourList(selectedType, filteredPackages.length);
+	});
+
+	// Track catalog searches (GA4 search, debounced)
+	$effect(() => {
+		const query = searchQuery.trim();
+		if (query.length >= 3) {
+			const timer = setTimeout(() => {
+				trackSearch(query, filteredPackages.length);
+			}, 600);
+			return () => clearTimeout(timer);
+		}
+	});
+
 	// Pagination calculations
 	const totalPages = $derived(Math.max(1, Math.ceil(filteredPackages.length / itemsPerPage)));
 
@@ -85,11 +108,33 @@
 </script>
 
 <svelte:head>
-	<title>Tour Packages | Surya Bali Tour</title>
+	<title>Private Bali Tour Packages & Day Charters | Surya Bali Tour</title>
 	<meta
 		name="description"
-		content="Explore our curated Bali tour packages. Private drivers, custom itineraries, and unforgettable experiences in Bali."
+		content="Discover private full-day Bali tour packages from $50–$65/car. Ubud waterfalls, Nusa Penida, Ulun Danu, Uluwatu sunset & volcano treks with dedicated local drivers. Free 24h cancellation."
 	/>
+	<link rel="canonical" href="https://suryabalitour.com/packages" />
+	<meta property="og:title" content="Private Bali Tour Packages & Day Charters | Surya Bali Tour" />
+	<meta
+		property="og:description"
+		content="Explore private full-day Bali tours with dedicated local drivers. Transparent pricing per vehicle, fuel included, zero upfront deposit, pay cash on the day."
+	/>
+	<meta property="og:url" content="https://suryabalitour.com/packages" />
+	<meta property="og:type" content="website" />
+	<meta
+		property="og:image"
+		content="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1600&auto=format&fit=crop"
+	/>
+	<meta name="twitter:title" content="Private Bali Tour Packages & Day Charters | Surya Bali Tour" />
+	<meta
+		name="twitter:description"
+		content="Explore private full-day Bali tours with dedicated local drivers. Transparent pricing per vehicle, fuel included, free cancellation."
+	/>
+	<meta
+		name="twitter:image"
+		content="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?q=80&w=1600&auto=format&fit=crop"
+	/>
+	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`}
 </svelte:head>
 
 <HeaderBlock />
@@ -97,26 +142,52 @@
 <main class="min-h-screen bg-black text-white">
 	<!-- Hero Banner -->
 	<section
-		class="relative flex h-[60vh] min-h-[480px] w-full items-center justify-center bg-black px-8 md:px-28"
+		class="relative flex h-[55vh] min-h-[440px] w-full items-center justify-center bg-black px-6 sm:h-[60vh] sm:min-h-[480px] sm:px-12 md:px-16 lg:px-24"
 	>
 		<img
 			alt="Tour Packages Banner"
-			class="absolute top-0 left-0 h-full w-full object-cover opacity-30"
+			class="absolute inset-0 h-full w-full object-cover opacity-30"
 			src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop"
 		/>
 		<div class="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black"></div>
 
 		<div class="relative z-10 mx-auto max-w-4xl space-y-4 pt-16 text-center">
-			<h1 class="text-6xl font-bold tracking-tight md:text-7xl">Tour Packages</h1>
-			<p class="mx-auto max-w-2xl text-xl font-light text-white/80">
-				Discover handcrafted itineraries guided by local Balinese experts. From ancient temples to
-				pristine islands.
+			<h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+				Tour Packages
+			</h1>
+			<p
+				class="mx-auto max-w-2xl text-base leading-relaxed font-light text-white/80 sm:text-lg md:text-xl"
+			>
+				Discover handcrafted itineraries guided by local Balinese experts. From sacred temples to
+				pristine hidden waterfalls and outer islands.
 			</p>
+
+			<!-- Trust & Value Assurance Bar (CRO) -->
+			<div
+				class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs font-medium tracking-wider text-white/70 uppercase"
+			>
+				<span class="inline-flex items-center gap-2">
+					<span class="size-1.5 rounded-full bg-emerald-400"></span>
+					10h Private Car & Driver
+				</span>
+				<span class="inline-flex items-center gap-2">
+					<span class="size-1.5 rounded-full bg-emerald-400"></span>
+					Fuel & Parking Included
+				</span>
+				<span class="inline-flex items-center gap-2">
+					<span class="size-1.5 rounded-full bg-emerald-400"></span>
+					Free Cancellation up to 24h
+				</span>
+				<span class="inline-flex items-center gap-2">
+					<span class="size-1.5 rounded-full bg-emerald-400"></span>
+					Pay Cash on Tour Day
+				</span>
+			</div>
 		</div>
 	</section>
 
 	<!-- Minimalist Filter & Search Controls (Seamless Inline Bar) -->
-	<section class="border-b border-white/10 px-8 py-8 md:px-28">
+	<section class="border-b border-white/10 px-6 py-6 sm:px-12 sm:py-8 md:px-16 lg:px-24">
 		<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 			<!-- Search Input -->
 			<div class="relative w-full lg:w-96">
@@ -141,10 +212,22 @@
 					<button
 						type="button"
 						onclick={() => (searchQuery = '')}
-						class="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-white/50 hover:text-white"
+						class="absolute top-1/2 right-2 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-white/60 transition-colors hover:bg-white/10 hover:text-white"
 						aria-label="Clear Search"
 					>
-						✕
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="size-4"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<line x1="18" y1="6" x2="6" y2="18" />
+							<line x1="6" y1="6" x2="18" y2="18" />
+						</svg>
 					</button>
 				{/if}
 			</div>
@@ -155,7 +238,8 @@
 					<button
 						type="button"
 						onclick={() => (selectedType = type)}
-						class="rounded-xl px-4 py-2 text-xs font-medium transition-all {selectedType === type
+						class="min-h-[38px] rounded-xl px-4 py-2 text-xs font-medium transition-all {selectedType ===
+						type
 							? 'bg-white font-semibold text-black'
 							: 'border border-white/20 text-white/80 hover:border-white/50'}"
 					>
@@ -218,7 +302,10 @@
 	</section>
 
 	<!-- Package Grid & Results Section -->
-	<section bind:this={packageGridRef} class="space-y-12 px-8 py-20 md:px-28">
+	<section
+		bind:this={packageGridRef}
+		class="space-y-12 px-6 py-12 sm:px-12 sm:py-16 md:px-16 lg:px-24"
+	>
 		<!-- Summary Header -->
 		<div
 			class="flex flex-col justify-between gap-4 border-b border-white/10 pb-4 sm:flex-row sm:items-center"
@@ -422,19 +509,23 @@
 	</section>
 
 	<!-- Why Book With Us (Editorial Open 3-Column Layout) -->
-	<section class="space-y-16 border-t border-white/10 px-8 py-24 md:px-28">
+	<section
+		class="space-y-12 border-t border-white/10 px-6 py-16 sm:space-y-16 sm:px-12 sm:py-24 md:px-16 lg:px-24"
+	>
 		<div>
 			<p class="text-xs font-semibold tracking-widest text-white/50 uppercase">
 				- The Surya Bali Standard
 			</p>
-			<h2 class="mt-2 text-4xl font-bold md:text-5xl">Why Travel With Us</h2>
+			<h2 class="mt-2 text-3xl font-bold sm:text-4xl md:text-5xl">Why Travel With Us</h2>
 		</div>
 
-		<div class="grid grid-cols-1 gap-16 md:grid-cols-3">
+		<div class="grid grid-cols-1 gap-8 sm:gap-12 md:grid-cols-3">
 			<div class="space-y-3 border-t border-white/20 pt-6">
 				<span class="font-mono text-xs font-bold tracking-widest text-white/40">01</span>
-				<h3 class="text-2xl font-semibold text-white">Personal Driver & Air-Con Vehicle</h3>
-				<p class="text-sm leading-relaxed font-light text-white/70">
+				<h3 class="text-xl font-semibold text-white sm:text-2xl">
+					Personal Driver & Air-Con Vehicle
+				</h3>
+				<p class="text-xs leading-relaxed font-light text-white/70 sm:text-sm">
 					Travel in complete comfort with dedicated local driver-guides focused exclusively on your
 					group.
 				</p>
@@ -442,8 +533,8 @@
 
 			<div class="space-y-3 border-t border-white/20 pt-6">
 				<span class="font-mono text-xs font-bold tracking-widest text-white/40">02</span>
-				<h3 class="text-2xl font-semibold text-white">Tailored Experience Packages</h3>
-				<p class="text-sm leading-relaxed font-light text-white/70">
+				<h3 class="text-xl font-semibold text-white sm:text-2xl">Tailored Experience Packages</h3>
+				<p class="text-xs leading-relaxed font-light text-white/70 sm:text-sm">
 					Customize your journey with jungle swings, photography, VIP boat tickets, or seafood
 					dinners.
 				</p>
@@ -451,8 +542,8 @@
 
 			<div class="space-y-3 border-t border-white/20 pt-6">
 				<span class="font-mono text-xs font-bold tracking-widest text-white/40">03</span>
-				<h3 class="text-2xl font-semibold text-white">No Hidden Fees & Clear Rates</h3>
-				<p class="text-sm leading-relaxed font-light text-white/70">
+				<h3 class="text-xl font-semibold text-white sm:text-2xl">No Hidden Fees & Clear Rates</h3>
+				<p class="text-xs leading-relaxed font-light text-white/70 sm:text-sm">
 					All entrance fees, toll tickets, and bottled water options clearly detailed before you
 					book.
 				</p>

@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import type { PageData } from './$types';
+	import { generateTourSchema, generateBreadcrumbSchema, SITE_URL } from '#lib/data/seo';
+	import {
+		trackTourView,
+		trackTourInquiry,
+		trackWhatsAppClick,
+		trackAddonToggle
+	} from '#lib/analytics';
 
 	let { data }: { data: PageData } = $props();
 	const tour = $derived(data.tour);
@@ -22,16 +29,27 @@
 
 	// Toggle Addon Selection
 	function toggleAddon(addonId: string) {
-		if (selectedAddonIds.includes(addonId)) {
+		const addon = tour.addons.find((a) => a.id === addonId);
+		const isCurrentlySelected = selectedAddonIds.includes(addonId);
+
+		if (isCurrentlySelected) {
 			selectedAddonIds = selectedAddonIds.filter((id) => id !== addonId);
 		} else {
 			selectedAddonIds = [...selectedAddonIds, addonId];
 		}
+
+		if (addon) {
+			trackAddonToggle(addon.name, addon.price, !isCurrentlySelected, tour.title);
+		}
 	}
 
-	// Calculate Dynamic Total Price
+	// Calculate Dynamic Total Price (Honor owner terms: private tours are per-car base vehicle)
+	const baseVehiclePrice = $derived(
+		tour.tourType === 'Private Tour' ? tour.priceFrom : tour.priceFrom * numberOfPeople
+	);
+
 	const totalPrice = $derived.by(() => {
-		let total = tour.priceFrom * numberOfPeople;
+		let total = baseVehiclePrice;
 
 		for (const addonId of selectedAddonIds) {
 			const addon = tour.addons.find((a) => a.id === addonId);
@@ -47,69 +65,118 @@
 		return total;
 	});
 
+	// Derived WhatsApp inquiry link pre-filled with real booking details (CRO)
+	const whatsappInquiryUrl = $derived.by(() => {
+		const message = encodeURIComponent(
+			`Hi Surya Bali Tour! I would like to book the "${tour.title}" for ${numberOfPeople} people on ${tourDate || 'my requested date'}. Estimated total: $${totalPrice} ${tour.currency}. Please confirm vehicle and driver availability.`
+		);
+		return `https://wa.me/6281234567890?text=${message}`;
+	});
+
+	// Dynamic Schema.org structured data (SEO & AI SEO)
+	const tourSchema = $derived(generateTourSchema(tour));
+	const breadcrumbSchema = $derived(
+		generateBreadcrumbSchema([
+			{ name: 'Home', url: '/' },
+			{ name: 'Packages', url: '/packages' },
+			{ name: tour.title, url: `/packages/${tour.slug}` }
+		])
+	);
+
+	// Track package view (GA4 view_item)
+	$effect(() => {
+		if (tour) {
+			trackTourView(tour);
+		}
+	});
+
 	function handleFormSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		isSubmitted = true;
+		trackTourInquiry({
+			packageId: tour.id,
+			packageTitle: tour.title,
+			tourType: tour.tourType,
+			totalPrice,
+			currency: tour.currency,
+			numberOfPeople,
+			tourDate,
+			addonsCount: selectedAddonIds.length
+		});
 	}
 </script>
 
 <svelte:head>
-	<title>{tour.title} | Surya Bali Tour</title>
-	<meta name="description" content={tour.overview} />
+	<title>{tour.title} | Private Bali Tour | Surya Bali Tour</title>
+	<meta
+		name="description"
+		content="{tour.tagline} {tour.duration} private tour charter from ${tour.priceFrom} USD. Covers private car, driver, fuel, and parking. Free 24h cancellation."
+	/>
+	<link rel="canonical" href="{SITE_URL}/packages/{tour.slug}" />
+	<meta property="og:title" content="{tour.title} | Surya Bali Tour" />
+	<meta property="og:description" content="{tour.overview}" />
+	<meta property="og:url" content="{SITE_URL}/packages/{tour.slug}" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="{tour.heroImage}" />
+	<meta name="twitter:title" content="{tour.title} | Surya Bali Tour" />
+	<meta name="twitter:description" content="{tour.overview}" />
+	<meta name="twitter:image" content="{tour.heroImage}" />
+	{@html `<script type="application/ld+json">${JSON.stringify(tourSchema)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`}
 </svelte:head>
 
 <HeaderBlock />
 
-<main class="min-h-screen bg-black text-white">
+<main class="min-h-screen bg-black text-white pb-24 md:pb-0">
 	<!-- Full-bleed Hero Banner -->
 	<section
-		class="relative flex h-[70vh] min-h-[520px] w-full items-end bg-black px-8 pb-16 md:px-28"
+		class="relative flex min-h-[460px] h-[60vh] sm:h-[70vh] sm:min-h-[520px] w-full items-end bg-black px-6 pb-12 sm:px-12 sm:pb-16 md:px-16 lg:px-24"
 	>
 		<img
 			alt={tour.title}
-			class="absolute top-0 left-0 h-full w-full object-cover opacity-40"
+			class="absolute inset-0 h-full w-full object-cover opacity-40"
 			src={tour.heroImage}
 		/>
 		<div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-black/70"></div>
 
-		<div class="relative z-10 max-w-4xl space-y-4">
+		<div class="relative z-10 max-w-4xl space-y-3 sm:space-y-4">
 			<!-- Breadcrumb -->
 			<nav
-				class="flex items-center gap-2 text-xs font-medium tracking-widest text-white/60 uppercase"
+				class="flex flex-wrap items-center gap-2 text-xs font-medium tracking-widest text-white/60 uppercase"
 			>
 				<a href="/" class="transition-colors hover:text-white">Home</a>
 				<span>/</span>
 				<a href="/packages" class="transition-colors hover:text-white">Packages</a>
 				<span>/</span>
-				<span class="font-semibold text-white">{tour.title}</span>
+				<span class="font-semibold text-white truncate max-w-[200px] sm:max-w-none">{tour.title}</span>
 			</nav>
 
 			<!-- Top Badges -->
 			<div class="flex flex-wrap gap-2">
 				<span
-					class="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase backdrop-blur-md"
+					class="rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-semibold tracking-wider uppercase backdrop-blur-md"
 				>
 					{tour.tourType}
 				</span>
 				<span
-					class="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase backdrop-blur-md"
+					class="rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-semibold tracking-wider uppercase backdrop-blur-md"
 				>
 					{tour.duration}
 				</span>
 			</div>
 
 			<!-- Title & Tagline -->
-			<h1 class="text-5xl leading-tight font-bold tracking-tight md:text-7xl">
+			<h1 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight">
 				{tour.title}
 			</h1>
-			<p class="max-w-2xl text-lg font-light text-white/80 md:text-xl">
+			<p class="max-w-2xl text-base sm:text-lg font-light text-white/80 md:text-xl leading-relaxed">
 				{tour.tagline}
 			</p>
 		</div>
 	</section>
 
 	<!-- Main Content Area (2 Columns) -->
-	<section class="px-8 py-16 md:px-28">
+	<section class="px-6 py-12 sm:px-12 sm:py-16 md:px-16 lg:px-24">
 		<div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
 			<!-- Left Column: Package Details (2 Cols) -->
 			<div class="space-y-16 lg:col-span-2">
@@ -308,12 +375,12 @@
 			</div>
 
 			<!-- Right Column: Sticky Booking Form Sidebar (1 Col) -->
-			<aside class="relative">
+			<aside id="booking-card" class="relative scroll-mt-24">
 				<div
-					class="sticky top-28 space-y-6 rounded-3xl border border-white/20 bg-neutral-900/90 p-8 shadow-2xl backdrop-blur-xl"
+					class="sticky top-28 space-y-6 rounded-2xl sm:rounded-3xl border border-white/20 bg-neutral-900/90 p-5 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl"
 				>
 					<!-- Price Summary Header -->
-					<div class="space-y-1 border-b border-white/10 pb-6">
+					<div class="space-y-1 border-b border-white/10 pb-5">
 						<span class="text-xs font-medium tracking-widest text-white/50 uppercase"
 							>Package Pricing</span
 						>
@@ -321,11 +388,24 @@
 							<span class="text-3xl font-bold text-white">${totalPrice} {tour.currency}</span>
 							<span class="text-xs text-white/60">Estimated Total</span>
 						</div>
-						<p class="text-xs font-light text-white/40">
-							Includes base package for {numberOfPeople} pax {selectedAddonIds.length > 0
-								? `+ ${selectedAddonIds.length} add-on(s)`
-								: ''}
+						<p class="text-xs font-light text-white/50">
+							{tour.tourType === 'Private Tour'
+								? `Private vehicle price (driver, fuel & parking included for ${numberOfPeople} pax)`
+								: `Base package for ${numberOfPeople} guests`}
+							{selectedAddonIds.length > 0 ? ` + ${selectedAddonIds.length} add-on(s)` : ''}
 						</p>
+
+						<!-- Risk Reversal Assurance Pills (CRO) -->
+						<div class="grid grid-cols-2 gap-2 pt-3">
+							<div class="rounded-lg border border-white/10 bg-white/5 p-2 text-center">
+								<div class="text-[11px] font-semibold text-white/90">Zero Deposit</div>
+								<div class="text-[10px] text-white/50">Pay cash on the day</div>
+							</div>
+							<div class="rounded-lg border border-white/10 bg-white/5 p-2 text-center">
+								<div class="text-[11px] font-semibold text-white/90">Free Cancel</div>
+								<div class="text-[10px] text-white/50">Up to 24h before</div>
+							</div>
+						</div>
 					</div>
 
 					{#if isSubmitted}
@@ -491,9 +571,9 @@
 							<!-- Addons Checkboxes Summary -->
 							{#if tour.addons.length > 0}
 								<div class="space-y-2 border-t border-white/10 pt-2">
-									<label class="block text-xs font-semibold tracking-wider text-white/70 uppercase">
+									<span class="block text-xs font-semibold tracking-wider text-white/70 uppercase">
 										Selected Add-ons ({selectedAddonIds.length})
-									</label>
+									</span>
 									<div class="max-h-36 space-y-1.5 overflow-y-auto pr-1">
 										{#each tour.addons as addon (addon.id)}
 											<label
@@ -532,16 +612,38 @@
 								></textarea>
 							</div>
 
-							<!-- Submit Button -->
-							<button
-								type="submit"
-								class="w-full rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black shadow-xl transition-all hover:bg-white/90 active:scale-98"
-							>
-								Submit Booking Request
-							</button>
+							<!-- Action Buttons (Form Submit & Direct WhatsApp CRO) -->
+							<div class="space-y-2 pt-1">
+								<button
+									type="submit"
+									class="w-full rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black shadow-xl transition-all hover:bg-white/90 active:scale-98"
+								>
+									Submit Booking Request
+								</button>
+
+								<a
+									href={whatsappInquiryUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									onclick={() =>
+										trackWhatsAppClick('package_sidebar', {
+											tourTitle: tour.title,
+											estimatedValue: totalPrice,
+											numberOfPeople
+										})}
+									class="flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3 text-xs font-semibold text-emerald-300 transition-all hover:bg-emerald-500/20 active:scale-98"
+								>
+									<svg class="size-4 shrink-0 fill-current" viewBox="0 0 24 24">
+										<path
+											d="M12.031 0C5.394 0 0 5.394 0 12.031c0 2.119.553 4.184 1.603 6.007L.062 24l6.137-1.61a11.97 11.97 0 0 0 5.832 1.504l.005-.001c6.634 0 12.028-5.394 12.028-12.032C24.064 5.394 18.67 0 12.031 0zm0 21.996a9.957 9.957 0 0 1-5.076-1.39l-.364-.216-3.774.99 1.008-3.678-.236-.376A9.955 9.955 0 1 1 12.031 22z"
+										/>
+									</svg>
+									Quick Booking via WhatsApp
+								</a>
+							</div>
 
 							<p class="text-center text-[10px] text-white/40">
-								No instant payment required. We will verify availability and confirm via WhatsApp.
+								No upfront credit card required. We verify availability and confirm directly on WhatsApp or Email.
 							</p>
 						</form>
 					{/if}
@@ -552,7 +654,9 @@
 
 	<!-- Suggested & Recommended Other Packages Section -->
 	{#if recommendedTours.length > 0}
-		<section class="space-y-8 border-t border-white/10 bg-neutral-950 px-8 py-16 md:px-28">
+		<section
+			class="space-y-8 border-t border-white/10 bg-neutral-950 px-6 py-12 sm:px-12 sm:py-16 md:px-16 lg:px-24"
+		>
 			<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
 					<p class="text-xs font-semibold tracking-widest text-white/50 uppercase">
@@ -681,13 +785,65 @@
 		<div class="relative max-h-[90vh] max-w-4xl overflow-hidden rounded-2xl border border-white/20">
 			<img src={activeGalleryImage} alt="Gallery Zoom" class="h-full w-full object-contain" />
 			<button
+				type="button"
 				onclick={() => (activeGalleryImage = null)}
-				class="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black"
+				class="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-black/70 text-white transition-colors hover:bg-black"
+				aria-label="Close image preview"
 			>
-				✕
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="size-5"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<line x1="18" y1="6" x2="6" y2="18" />
+					<line x1="6" y1="6" x2="18" y2="18" />
+				</svg>
 			</button>
 		</div>
 	</div>
 {/if}
+
+<!-- Sticky Mobile Bottom Booking Bar (CRO Enhanced) -->
+<aside
+	aria-label="Quick Booking Bar"
+	class="fixed inset-x-0 bottom-0 z-20 flex items-center justify-between gap-3 border-t border-white/20 bg-neutral-950/95 px-5 py-3.5 backdrop-blur-xl md:hidden"
+>
+	<div>
+		<div class="text-base font-bold text-white">${totalPrice} {tour.currency}</div>
+		<div class="text-[10px] uppercase tracking-wider text-white/50">{tour.tourType}</div>
+	</div>
+	<div class="flex items-center gap-2">
+		<a
+			href={whatsappInquiryUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			onclick={() =>
+				trackWhatsAppClick('package_mobile_bar', {
+					tourTitle: tour.title,
+					estimatedValue: totalPrice,
+					numberOfPeople
+				})}
+			aria-label="Direct WhatsApp Concierge"
+			class="flex size-10 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/15 text-emerald-400 transition-colors hover:bg-emerald-500/25 active:scale-95"
+		>
+			<svg class="size-4 fill-current" viewBox="0 0 24 24">
+				<path
+					d="M12.031 0C5.394 0 0 5.394 0 12.031c0 2.119.553 4.184 1.603 6.007L.062 24l6.137-1.61a11.97 11.97 0 0 0 5.832 1.504l.005-.001c6.634 0 12.028-5.394 12.028-12.032C24.064 5.394 18.67 0 12.031 0zm0 21.996a9.957 9.957 0 0 1-5.076-1.39l-.364-.216-3.774.99 1.008-3.678-.236-.376A9.955 9.955 0 1 1 12.031 22z"
+				/>
+			</svg>
+		</a>
+		<a
+			href="#booking-card"
+			class="rounded-xl bg-white px-5 py-2.5 text-xs font-semibold text-black transition-all hover:bg-white/90 shadow-md active:scale-95"
+		>
+			Book / Inquire
+		</a>
+	</div>
+</aside>
 
 <FooterBlock />
