@@ -33,7 +33,7 @@
 	<meta property="og:type" content="website" />
 	<meta
 		property="og:image"
-		content="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop"
+		content="https://res.cloudinary.com/spsms1n0/image/upload/v1791717377/thumbnail-suryabalitour.png"
 	/>
 	<meta
 		name="twitter:title"
@@ -45,7 +45,7 @@
 	/>
 	<meta
 		name="twitter:image"
-		content="https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1600&auto=format&fit=crop"
+		content="https://res.cloudinary.com/spsms1n0/image/upload/v1791717377/thumbnail-suryabalitour.png"
 	/>
 	{@html `<script type="application/ld+json">${JSON.stringify(agencySchema)}</script>`}
 </svelte:head>
