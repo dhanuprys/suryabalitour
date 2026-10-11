@@ -1,6 +1,6 @@
-import GetYourGuideLogo from '#lib/assets/getyourguide.svg';
-import TripadvisorLogo from '#lib/assets/tripadvisor.png';
-import ViatorLogo from '#lib/assets/viator.png';
+import GetYourGuideLogo from '#lib/assets/images/partners/getyourguide.webp';
+import TripadvisorLogo from '#lib/assets/images/partners/tripadvisor.webp';
+import ViatorLogo from '#lib/assets/images/partners/viator.webp';
 
 export interface MediaPartner {
 	id: string;

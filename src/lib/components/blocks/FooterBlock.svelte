@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BrandLogo from '#lib/assets/images/branding/logo.png';
+	import BrandLogo from '#lib/assets/images/branding/logo.webp';
 	import scenicBaliLandscape from '#lib/assets/images/banners/scenic-bali-landscape.webp';
 	import { footerNavSections, socialLinks } from '#lib/data';
 	import { trackWhatsAppClick, trackEvent } from '#lib/analytics';

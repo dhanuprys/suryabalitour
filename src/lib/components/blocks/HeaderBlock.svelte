@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { headerNavItems, SITE_PHONE_DISPLAY, WHATSAPP_DIRECT_URL } from '#lib/data';
-	import BrandLogo from '#lib/assets/images/branding/logo.png';
+	import BrandLogo from '#lib/assets/images/branding/logo.webp';
 	import { trackWhatsAppClick } from '#lib/analytics';
 
 	let mobileMenuOpen = $state(false);
