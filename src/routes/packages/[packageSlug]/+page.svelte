@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
 	import type { PageData } from './$types';
-	import { generateTourSchema, generateBreadcrumbSchema, SITE_URL, getWhatsAppUrl } from '#lib/data/seo';
+	import {
+		generateTourSchema,
+		generateBreadcrumbSchema,
+		SITE_URL,
+		getWhatsAppUrl
+	} from '#lib/data/seo';
 	import {
 		trackTourView,
 		trackTourInquiry,

@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { HeaderBlock, FooterBlock } from '#lib/components/blocks';
-	import { generateFaqSchema, generateBreadcrumbSchema, SITE_URL, WHATSAPP_DIRECT_URL, SITE_EMAIL } from '#lib/data/seo';
+	import {
+		generateFaqSchema,
+		generateBreadcrumbSchema,
+		SITE_URL,
+		WHATSAPP_DIRECT_URL,
+		SITE_EMAIL
+	} from '#lib/data/seo';
 	import traditionalTempleGateImg from '#lib/assets/images/banners/traditional-temple-gate.webp';
 
 	const sections = [
@@ -202,14 +208,14 @@
 						<p class="text-xs font-light text-white/70 sm:text-sm">
 							Email <a
 								href="mailto:{SITE_EMAIL}"
-								class="break-all text-white underline underline-offset-4"
-								>{SITE_EMAIL}</a
-							> or <a
+								class="break-all text-white underline underline-offset-4">{SITE_EMAIL}</a
+							>
+							or
+							<a
 								href={WHATSAPP_DIRECT_URL}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-white underline underline-offset-4"
-								>message us directly on WhatsApp</a
+								class="text-white underline underline-offset-4">message us directly on WhatsApp</a
 							>.
 						</p>
 					</div>

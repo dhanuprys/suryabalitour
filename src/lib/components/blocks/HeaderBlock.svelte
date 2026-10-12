@@ -147,7 +147,9 @@
 					onclick={() => trackWhatsAppClick('header_mobile_drawer_phone')}
 					class="inline-block text-sm font-light text-white/80 transition-colors hover:text-white"
 				>
-					Direct WhatsApp: <span class="font-medium text-white underline underline-offset-4">{SITE_PHONE_DISPLAY}</span>
+					Direct WhatsApp: <span class="font-medium text-white underline underline-offset-4"
+						>{SITE_PHONE_DISPLAY}</span
+					>
 				</a>
 				<p class="text-xs text-white/40">English-speaking local drivers available 24/7</p>
 			</div>

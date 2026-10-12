@@ -1,7 +1,8 @@
 import type { TourPackage } from '#lib/data/tours';
 import { browser } from '$app/env';
 
-// Default Google Analytics 4 Measurement ID (Can be replaced with production ID or env variable)
+// Google Tag Manager & Google Analytics 4 IDs
+export const GTM_ID = 'GTM-NZKPK29S';
 export const GA_MEASUREMENT_ID = 'G-2Y5LM54W1V';
 
 declare global {
@@ -12,7 +13,16 @@ declare global {
 }
 
 /**
- * Universal safe helper to push events to Google Analytics 4 (gtag.js)
+ * Universal safe helper to push data objects to GTM dataLayer
+ */
+export function pushDataLayer(data: Record<string, unknown>) {
+	if (!browser || typeof window === 'undefined') return;
+	window.dataLayer = window.dataLayer || [];
+	window.dataLayer.push(data);
+}
+
+/**
+ * Universal safe helper to push events or call gtag.js / GTM dataLayer
  */
 export function gtag(...args: unknown[]) {
 	if (!browser) return;
@@ -20,6 +30,13 @@ export function gtag(...args: unknown[]) {
 		window.dataLayer = window.dataLayer || [];
 		if (typeof window.gtag === 'function') {
 			window.gtag(...args);
+		} else if (args[0] === 'event' && typeof args[1] === 'string') {
+			const params =
+				typeof args[2] === 'object' && args[2] !== null ? (args[2] as Record<string, unknown>) : {};
+			window.dataLayer.push({
+				event: args[1],
+				...params
+			});
 		} else {
 			window.dataLayer.push(args);
 		}
@@ -27,7 +44,7 @@ export function gtag(...args: unknown[]) {
 }
 
 /**
- * Track SvelteKit Client-Side Page Views
+ * Track SvelteKit Client-Side Page Views (pushes 'page_view' event to GTM)
  */
 export function trackPageView(path?: string, title?: string) {
 	if (!browser) return;
@@ -35,7 +52,7 @@ export function trackPageView(path?: string, title?: string) {
 	const pagePath = path ?? window.location.pathname + window.location.search;
 	const pageTitle = title ?? document.title;
 
-	gtag('event', 'page_view', {
+	trackEvent('page_view', {
 		page_location: pageLocation,
 		page_path: pagePath,
 		page_title: pageTitle
@@ -43,19 +60,25 @@ export function trackPageView(path?: string, title?: string) {
 }
 
 /**
- * Generic GA4 Event Tracker
+ * Generic Event Tracker for Google Tag Manager
  */
 export function trackEvent(eventName: string, params: Record<string, unknown> = {}) {
 	if (!browser) return;
-	gtag('event', eventName, params);
+	pushDataLayer({
+		event: eventName,
+		...params
+	});
+	if (typeof window.gtag === 'function') {
+		window.gtag('event', eventName, params);
+	}
 }
 
 /**
- * Track Tour Package View (GA4 view_item)
+ * Track Tour Package View (GA4 view_item / GTM event)
  */
 export function trackTourView(tour: TourPackage) {
 	if (!browser) return;
-	gtag('event', 'view_item', {
+	trackEvent('view_item', {
 		currency: tour.currency,
 		value: tour.priceFrom,
 		items: [
@@ -71,29 +94,29 @@ export function trackTourView(tour: TourPackage) {
 }
 
 /**
- * Track Tour Catalog View or Filter (GA4 view_item_list)
+ * Track Tour Catalog View or Filter (GA4 view_item_list / GTM event)
  */
 export function trackTourList(categoryName: string = 'All Tours', itemCount: number = 0) {
 	if (!browser) return;
-	gtag('event', 'view_item_list', {
+	trackEvent('view_item_list', {
 		item_list_name: categoryName,
 		items_count: itemCount
 	});
 }
 
 /**
- * Track Search on Packages Catalog (GA4 search)
+ * Track Search on Packages Catalog (GA4 search / GTM event)
  */
 export function trackSearch(searchTerm: string, resultsCount: number) {
 	if (!browser || !searchTerm.trim()) return;
-	gtag('event', 'search', {
+	trackEvent('search', {
 		search_term: searchTerm.trim(),
 		results_count: resultsCount
 	});
 }
 
 /**
- * Track Tour Booking Inquiry Form Submission (GA4 generate_lead)
+ * Track Tour Booking Inquiry Form Submission (GA4 generate_lead / GTM event)
  */
 export function trackTourInquiry(data: {
 	packageId: string;
@@ -106,7 +129,7 @@ export function trackTourInquiry(data: {
 	addonsCount: number;
 }) {
 	if (!browser) return;
-	gtag('event', 'generate_lead', {
+	trackEvent('generate_lead', {
 		currency: data.currency,
 		value: data.totalPrice,
 		lead_type: 'tour_booking_request',
@@ -120,7 +143,7 @@ export function trackTourInquiry(data: {
 }
 
 /**
- * Track WhatsApp Conversion Clicks (GA4 contact)
+ * Track WhatsApp Conversion Clicks (GA4 contact / GTM event)
  */
 export function trackWhatsAppClick(
 	sourceLocation: string,
@@ -132,7 +155,7 @@ export function trackWhatsAppClick(
 	} = {}
 ) {
 	if (!browser) return;
-	gtag('event', 'contact', {
+	trackEvent('contact', {
 		method: 'WhatsApp',
 		contact_source: sourceLocation,
 		tour_name: details.tourTitle ?? details.packageTitle ?? 'General Inquiry',
@@ -142,7 +165,7 @@ export function trackWhatsAppClick(
 }
 
 /**
- * Track Addon Option Selection (GA4 customize_package)
+ * Track Addon Option Selection (GA4 customize_package / GTM event)
  */
 export function trackAddonToggle(
 	addonName: string,
@@ -151,7 +174,7 @@ export function trackAddonToggle(
 	tourTitle: string
 ) {
 	if (!browser) return;
-	gtag('event', 'customize_package', {
+	trackEvent('customize_package', {
 		addon_name: addonName,
 		addon_price: price,
 		action: selected ? 'add' : 'remove',
